@@ -1,0 +1,285 @@
+---
+mode: "custom"
+title: "Confluent Documentation"
+---
+
+<div className="relative w-full flex items-center justify-center" style={{ minHeight: '34rem', overflow: 'hidden'}}>
+
+<div id="background-div" className="absolute inset-0 h-full bg-[#04052f] bg-cover bg-center"></div>
+
+<div
+  id="background-div"
+  className="absolute inset-0 h-full bg-no-repeat bg-cover"
+  style={{ 
+    backgroundImage: 'url("https://docs.confluent.io/_static/images/hero-blue-violet-hero.svg")',
+    backgroundPosition: 'center center'
+  }}
+>
+</div>
+
+<div style={{ position: 'relative', textAlign: 'center', padding: '2rem 1rem', width: '100%', zIndex: 10 }}>
+  <div
+    className="text-3xl md:text-4xl lg:text-5xl font-bold w-full text-white"
+    style={{ marginTop: '1rem' }}
+  >
+    Confluent Documentation
+  </div>
+
+    <p className="text-base md:text-lg text-white" style={{  fontWeight: '500' , maxWidth: '40rem', margin: '0 auto', marginTop: '0.75rem', paddingLeft: '1rem', paddingRight: '1rem'}}>
+      Find the guides, samples, tutorials, API, and CLI reference to get started with the streaming data platform based on Apache Kafka®.
+    </p>
+  <div
+    style={{marginTop: '2rem', marginBottom: '2rem', maxWidth: '60rem', marginLeft: 'auto',
+    marginRight: 'auto', paddingLeft: '1.25rem',
+    paddingRight: '1.25rem' }}
+  >
+    <Columns cols={3}>
+      <Card title="Confluent Cloud" icon="cloud" href="https://docs.confluent.io/cloud/current/overview.html">
+      A fully-managed data streaming platform with a cloud-native Apache Kafka® engine for elastic scaling, enterprise-grade security, stream processing, and governance.
+      </Card>
+      <Card title="Confluent Platform" icon="layer-group" href="https://docs.confluent.io/platform/current/overview.html">
+      An enterprise-grade distribution of Apache Kafka available on-premises as self-managed software, with enterprise-grade security, stream processing, and governance.
+      </Card>
+      <Card title="Apache Kafka" icon="chart-network" href="https://docs.confluent.io/kafka/overview.html">
+      An open-source distributed data streaming engine used by thousands of companies to build streaming data pipelines and applications, powering mission-critical operational and analytics use cases.
+      </Card>
+    </Columns>
+  </div>
+</div>
+</div>
+
+<div
+  style={{marginTop: '2rem', marginBottom: '8rem', maxWidth: '70rem', marginLeft: 'auto',
+  marginRight: 'auto', paddingLeft: '1.25rem',
+  paddingRight: '1.25rem' }}
+>
+
+<div className="flex flex-col w-full " style={{ marginTop: '2rem', marginBottom: '2rem' }}>
+  <h2
+    className="text-gray-900 dark:text-gray-200"
+    style={{
+      fontSize: '2rem',
+      fontWeight: '700',
+    }}
+  >
+    What's New
+  </h2>
+  <p
+    style={{
+      fontSize: '1rem',
+      fontWeight: '500',
+    }}
+  >
+    Try out the latest data streaming platform features, including [Confluent Cloud for Apache Flink®](https://docs.confluent.io/cloud/current/flink/overview.html) and [Confluent for VS Code](https://docs.confluent.io/cloud/current/client-apps/vs-code-extension.html).
+  </p>
+</div>
+
+<Columns cols={3}>
+  <Card title="Confluent Tableflow" icon="https://docs.confluent.io/_static/images/icons/icon-tableflow.svg" href="https://docs.confluent.io/cloud/current/topics/tableflow/overview.html">
+  Represent Apache Kafka® topics as open table formats like Apache Iceberg™ and Delta Lake
+  </Card>
+  <Card title="Confluent Cloud for Apache Flink" icon="squirrel" href="https://docs.confluent.io/cloud/current/flink/overview.html">
+  A cloud-native, serverless service for Apache Flink that enables simple, scalable, and secure stream processing that integrates seamlessly with Kafka
+  </Card>
+  <Card title="Confluent for VS Code" icon="code" href="https://docs.confluent.io/cloud/current/client-apps/vs-code-extension.html">
+  Build, manage, and monitor data streaming applications with Confluent for VS Code
+  </Card>
+  <Card title="Release Notes for Confluent Cloud" icon="cloud" href="https://docs.confluent.io/cloud/current/release-notes/index.html">
+  Discover the latest features
+  </Card>
+  <Card title="Confluent Cloud APIs" icon="cloud" href="https://docs.confluent.io/cloud/current/api.html">
+  Use the API to manage your deployment
+  </Card>
+  <Card title="Control Center" icon="chart-line" href="https://docs.confluent.io/control-center/current/overview.html">
+  A next generation tool for managing and monitoring Confluent Platform
+  </Card>
+</Columns>
+
+<div className="flex flex-col w-full " style={{ marginTop: '2rem', marginBottom: '2rem' }}>
+  <h2
+    className="text-gray-900 dark:text-gray-200"
+    style={{
+      fontSize: '2rem',
+      fontWeight: '700',
+    }}
+  >
+    Featured Content
+  </h2>
+  <p
+    style={{
+      fontSize: '1rem',
+      fontWeight: '500',
+    }}
+  >
+    Get started with the fully-managed [Confluent Cloud Quick Start](https://docs.confluent.io/cloud/current/get-started/index.html) or on-premises using the [Confluent Platform ZIP and TAR installation](https://docs.confluent.io/platform/current/installation/installing_cp/zip-tar.html).
+  </p>
+</div>
+
+<Columns cols={3}>
+  <Card title="Confluent Cloud Quick Start" icon="cloud" href="https://docs.confluent.io/cloud/current/get-started/index.html">
+  Get started with quickly with a fully-managed data streaming platform
+  </Card>
+  <Card title="ZIP and TAR Installation" icon="server" href="https://docs.confluent.io/platform/current/installation/installing_cp/zip-tar.html">
+  Install Confluent Platform on-premises using ZIP and TAR archive
+  </Card>
+  <Card title="Install Confluent CLI" icon="terminal" href="https://docs.confluent.io/confluent-cli/current/install.html">
+  Manage Confluent Platform and Cloud using the command-line interface
+  </Card>
+  <Card title="Confluent Platform Quick Start" icon="layer-group" href="https://docs.confluent.io/platform/current/get-started/platform-quickstart.html">
+  Get started with Confluent Platform on-premises
+  </Card>
+  <Card title="Get Started with Connect" icon="https://docs.confluent.io/_static/images/icons/icon-connector.svg" href="https://docs.confluent.io/platform/current/connect/userguide.html">
+  Get started and learn the Kafka Connect basics
+  </Card>
+  <Card title="Cluster Types" icon="chart-network" href="https://docs.confluent.io/cloud/current/clusters/cluster-types.html">
+  Learn about the Kafka cluster types available in Confluent Cloud
+  </Card>
+</Columns>
+
+<div className="flex flex-col w-full " style={{ marginTop: '2rem', marginBottom: '2rem' }}>
+  <h2
+    className="text-gray-900 dark:text-gray-200"
+    style={{
+      fontSize: '2rem',
+      fontWeight: '700',
+    }}
+  >
+    Browse by Feature
+  </h2>
+  <p
+    style={{
+      fontSize: '1rem',
+      fontWeight: '500',
+    }}
+  >
+    Find the guides, examples, and tutorials for Confluent features, including the [Kafka consumer](https://docs.confluent.io/platform/current/clients/consumer.html) or the [Kafka CLI tools](https://docs.confluent.io/kafka/operations-tools/kafka-tools.html).
+  </p>
+</div>
+
+<Columns cols={3}>
+  <Card title="Kafka Streams" icon="https://docs.confluent.io/_static/images/icons/icon-streams.svg" href="https://docs.confluent.io/cloud/current/kafka-streams/index.html">
+  Kafka Streams
+  </Card>
+
+  <Card title="Kafka Connect" icon="https://docs.confluent.io/_static/images/icons/icon-connector.svg" href="https://docs.confluent.io/cloud/current/connectors/index.html">
+  Kafka Connect
+  </Card>
+
+  <Card title="Schema Registry" icon="https://docs.confluent.io/_static/images/icons/icon-government.svg" href="https://docs.confluent.io/cloud/current/sr/index.html">
+  Schema Registry
+  </Card>
+
+  <Card title="Apache Flink" icon="squirrel" href="https://docs.confluent.io/cloud/current/flink/index.html">
+  Apache Flink
+  </Card>
+
+  <Card title="Networking" icon="network-wired" href="https://docs.confluent.io/cloud/current/networking/overview.html">
+  Networking
+  </Card>
+
+  <Card title="Security" icon="lock" href="https://docs.confluent.io/cloud/current/security/overview.html">
+  Security
+  </Card>
+
+  <Card title="Confluent Cloud for Government" icon="https://docs.confluent.io/_static/images/icons/icon-government.svg" href="https://docs.confluent.io/confluentgov/current/overview.html">
+  Confluent Cloud for Government
+  </Card>
+
+  <Card title="Confluent CLI" icon="terminal" href="https://docs.confluent.io/confluent-cli/current/overview.html">
+  Confluent CLI
+  </Card>
+
+  <Card title="Monitoring" icon="chart-line" href="https://docs.confluent.io/cloud/current/monitoring/overview.html">
+  Monitoring
+  </Card>
+
+  <Card title="Control Center" icon="chart-line" href="https://docs.confluent.io/control-center/current/overview.html">
+  Control Center
+  </Card>
+
+  <Card title="Kafka Clients" icon="https://docs.confluent.io/_static/images/icons/icon-join-data.svg" href="https://docs.confluent.io/kafka-client/cloud-clients.html">
+  Kafka Clients
+  </Card>
+
+  <Card title="Kafka Consumer" icon="https://docs.confluent.io/_static/images/icons/icon-join-data.svg" href="https://docs.confluent.io/cloud/current/client-apps/consumer.html">
+  Kafka Consumer
+  </Card>
+
+  <Card title="Kafka Producer" icon="https://docs.confluent.io/_static/images/icons/icon-join-data.svg" href="https://docs.confluent.io/cloud/current/client-apps/producer.html">
+  Kafka Producer
+  </Card>
+
+  <Card title="Multi-Region Clusters" icon="globe" href="https://docs.confluent.io/platform/current/multi-dc-deployments/multi-region.html">
+  Multi-Region Clusters
+  </Card>
+
+  <Card title="Stream Lineage" icon="https://docs.confluent.io/_static/images/icons/icon-iot.svg" href="https://docs.confluent.io/cloud/current/stream-governance/stream-lineage.html">
+  Stream Lineage
+  </Card>
+
+  <Card title="Terraform" icon="https://docs.confluent.io/_static/images/icons/icon-cloud-management.svg" href="https://docs.confluent.io/cloud/current/get-started/terraform-provider.html">
+  Terraform
+  </Card>
+
+  <Card title="Confluent for Kubernetes" icon="https://docs.confluent.io/_static/images/icons/icon-central%20nervous%20system.svg" href="https://docs.confluent.io/operator/current/overview.html">
+  Confluent for Kubernetes
+  </Card>
+
+  <Card title="Ansible Playbooks" icon="https://docs.confluent.io/_static/images/icons/icon-central%20nervous%20system.svg" href="https://docs.confluent.io/ansible/current/overview.html">
+  Confluent Platform
+  </Card>
+
+  <Card title="Stream Governance" icon="book-open" href="https://docs.confluent.io/cloud/current/stream-governance/index.html">
+  Stream Governance
+  </Card>
+
+  <Card title="Replicator" icon="https://docs.confluent.io/_static/images/icons/icon-replicator.svg" href="https://docs.confluent.io/platform/current/multi-dc-deployments/replicator/index.html">
+  Replicator
+  </Card>
+
+  <Card title="Cluster Linking" icon="https://docs.confluent.io/_static/images/icons/icon-join-data.svg" href="https://docs.confluent.io/cloud/current/multi-cloud/cluster-linking/index.html">
+  Cluster Linking
+  </Card>
+
+  <Card title="Auto Data Balancer" icon="https://docs.confluent.io/_static/images/icons/icon-auto-data-balancer.svg" href="https://docs.confluent.io/platform/current/clusters/rebalancer/index.html">
+  Auto Data Balancer
+  </Card>
+
+  <Card title="WarpStream" icon="https://docs.confluent.io/_static/images/icons/icon-warpstream.svg" href="https://docs.warpstream.com/warpstream?session_ref=direct&url_ref=https%3A%2F%2Fdocs.confluent.io%2F">
+  WarpStream
+  </Card>
+</Columns>
+
+<div className="flex flex-col w-full " style={{ marginTop: '2rem', marginBottom: '2rem' }}>
+  <h2
+    className="text-gray-900 dark:text-gray-200"
+    style={{
+      fontSize: '2rem',
+      fontWeight: '700',
+    }}
+  >
+    More Ways to Learn
+  </h2>
+  <p
+    style={{
+      fontSize: '1rem',
+      fontWeight: '500',
+    }}
+  >
+    Explore the video courses available on [Confluent Developer](https://developer.confluent.io/?session_ref=direct&url_ref=https%3A%2F%2Fdocs.confluent.io%2F).
+  </p>
+</div>
+
+<Columns cols={3}>
+  <Card title="Apache Kafka 101" icon="chart-network" href="https://developer.confluent.io/courses/apache-kafka/events/?session_ref=direct&url_ref=https%3A%2F%2Fdocs.confluent.io%2F">
+  Learn the fundamentals of Kafka with this video course
+  </Card>
+  <Card title="Kafka Connect 101" icon="https://docs.confluent.io/_static/images/icons/icon-connector.svg" href="https://developer.confluent.io/courses/kafka-connect/intro/?session_ref=direct&url_ref=https%3A%2F%2Fdocs.confluent.io%2F">
+  Learn the fundamentals of Kafka Connect with this video course
+  </Card>
+  <Card title="Apache Flink SQL" icon="squirrel" href="https://developer.confluent.io/courses/flink-sql/overview/?session_ref=direct&url_ref=https%3A%2F%2Fdocs.confluent.io%2F">
+  Learn how you can use Flink SQL with with Confluent Cloud for Apache Flink
+  </Card>
+</Columns>
+
+</div>

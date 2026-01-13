@@ -1,0 +1,339 @@
+---
+title: "FAQ for Confluent Cloud"
+description: "Find answers to frequently asked questions about [Confluent Cloud](https://www.confluent.io/confluent-cloud/?session_ref=direct&url_ref=https%3A%2F%2Fdocs.confluent.io%2Fcloud%2Fcurrent%2Ffaq.html), a fully-managed, cloud-native data streaming platform. This page provides information on security, support plans, and more."
+---
+
+<AccordionGroup>
+
+<Accordion title="How do I sign up for free trial of Confluent Cloud?">
+Sign up at [https://confluent.cloud](https://confluent.cloud/?session_ref=direct&url_ref=https%3A%2F%2Fdocs.confluent.io%2Fcloud%2Fcurrent%2Ffaq.html). For details on the temporary free trial that Confluent Cloud offers, see [Deploy Free Clusters on Confluent Cloud](https://docs.confluent.io/cloud/current/get-started/free-trial.html#free-trial).
+</Accordion>
+
+<Accordion title="What version of Kafka does Confluent Cloud use?">
+Confluent Cloud is built upon a cloud-native Kafka engine, Kora, that maintains strict compatibility with and tracks the latest version of Apache Kafka®. Client compatibility is covered in depth in our [Clients Overview documentation](https://docs.confluent.io/kafka-client/overview.html).
+
+Confluent Platform builds on a subset of the Kora engine, but does not share the same release cycle as Confluent Cloud. For more details of Confluent Platform compatibility, see [Confluent Platform support versions](https://docs.confluent.io/platform/current/installation/versions-interoperability.html).
+</Accordion>
+
+<Accordion title="What client and protocol versions are supported?">
+- Confluent Cloud follows the Confluent Platform [client version support policy](https://docs.confluent.io/platform/current/installation/versions-interoperability.html#cp-ak-compatibility).
+- To connect to Confluent Cloud, compatible clients must support and implement TLS encryption and SASL\_PLAIN or SASL\_OAUTHBEARER (with OAuth-OIDC configured) authentication.
+- All client features since 0.10.0.0 are supported, including exactly-once delivery semantics.
+</Accordion>
+
+<Accordion title="What security, compliance, and privacy features does Confluent Cloud provide?">
+Confluent's product offerings are designed to support the needs of enterprise customers for security, compliance, and privacy. For information on compliance and security, see the [Trust & Security page](https://www.confluent.io/trust-and-security/?session_ref=direct&url_ref=https%3A%2F%2Fdocs.confluent.io%2Fcloud%2Fcurrent%2Ffaq.html) page.
+
+See [What specific security features does Confluent Cloud offer?](https://docs.confluent.io/cloud/current/#security-features) for more details about security features.
+</Accordion>
+
+<Accordion title="What specific security features does Confluent Cloud offer?">
+- All traffic over the wire requires TLS 1.2 encryption and authentication for SASL\_PLAIN or SASL\_OAUTHBEARER (with OAuth-OIDC identity provider configured).
+- All data is encrypted at rest on encrypted volumes. Confluent Cloud ensures encryption on customer data stored at rest through the native encryption services offered by our cloud providers.
+- [BYOK encryption](https://docs.confluent.io/cloud/current/security/encrypt/byok/overview.html#byok-encrypted-clusters) is supported for data at rest for Dedicated clusters on AWS, Azure, and Google Cloud.
+- You control the API keys and secrets specific to your cluster which you can revoke or reissue if necessary.
+- All data is stored on secure infrastructure, with access controls that are restricted to Confluent engineers, inside a Confluent controlled VPC.
+- Confluent Cloud Dedicated clusters provide dedicated compute and storage resources.
+- [VPC Peering (optional)](https://docs.confluent.io/cloud/current/networking/overview.html#cloud-networking) provides network-level security for customers with Dedicated Clusters in Confluent Cloud.
+- [Single sign-on (SSO)](https://docs.confluent.io/cloud/current/security/authenticate/user-identities/user-idps/sso/overview.html#sso-saml) using your existing SAML-based identity provider (IdP). Confluent Cloud SSO provides access control for multiple independent software systems.
+
+For more information, see the [Confluent Cloud Security Addendum](https://www.confluent.io/cloud-enterprise-security-addendum?session_ref=direct&url_ref=https%3A%2F%2Fdocs.confluent.io%2Fcloud%2Fcurrent%2Ffaq.html) and the [Confluent Cloud Security Controls](https://assets.confluent.io/m/67f93edfe1a9f524/original/20200805-WP-Confluent_Cloud_Security_Controls.pdf?session_ref=direct&url_ref=https%3A%2F%2Fdocs.confluent.io%2Fcloud%2Fcurrent%2Ffaq.html) whitepaper.
+</Accordion>
+
+<Accordion title="What version of TLS is supported on Confluent Cloud?">
+TLS version 1.2 is supported.
+
+<Important>
+Effective March 15, 2020, connections made by using TLS 1.0 and 1.1 are no longer supported. TLS 1.0 and 1.1 are legacy cryptographic protocols that do not support modern cryptographic algorithms. They contain security vulnerabilities that can be exploited by attackers. The Internet Engineering Task Force is planning to officially [deprecate both protocols](https://tools.ietf.org/html/draft-ietf-tls-oldversions-deprecate-00?session_ref=direct&url_ref=https%3A%2F%2Fdocs.confluent.io%2Fcloud%2Fcurrent%2Ffaq.html). The majority of encrypted internet traffic is now over TLS 1.2. TLS 1.2 has been the recommended version for IETF protocols since 2008.
+</Important>
+</Accordion>
+
+<Accordion title="Is Kerberos supported on Confluent Cloud?">
+Kerberos authentication is not supported.
+</Accordion>
+
+<Accordion title="Are Confluent Cloud IP addresses and hostnames static?">
+In most cases, no. Because the cloud infrastructure used by Confluent Cloud does not guarantee static IP addresses or hostnames across cluster changes, DNS is used to provide a consistent address. The underlying IP addresses and hostnames might be stable for a period of time, but are subject to change at any time, so they should not be relied upon for any use.
+
+Confluent provides egress public IP addresses that you can use for communicating between Kafka clusters (with public networking) in Confluent Cloud and external data sources and sinks. For more information, see [Use Public Egress IP Addresses on Confluent Cloud for Connectors and Cluster Linking](https://docs.confluent.io/cloud/current/networking/static-egress-ip-addresses.html#static-egress-ip-addresses) and [Public IP address for Confluent Cloud connectors](https://docs.confluent.io/cloud/current/connectors/static-egress-ip.html#cc-static-egress-ips).
+
+- Planned changes to the list of public egress IP addresses is considered a Major Upgrade and we will follow the policy outlined in [Major Upgrades for Confluent Cloud](https://docs.confluent.io/cloud/current/release-notes/upgrade-policy.html#major-ccloud-upgrade).
+- In the event of an unplanned change, Confluent will send out notifications as soon as possible.
+- You may be required to take immediate action to update your firewall rules.
+
+The following blogs describe how the common outbound proxies handle IP address changes:
+
+- [DNS for Service Discovery in HAProxy - HAProxy Technologies](https://www.haproxy.com/blog/dns-service-discovery-haproxy/?session_ref=direct&url_ref=https%3A%2F%2Fdocs.confluent.io%2Fcloud%2Fcurrent%2Ffaq.html).
+- [DNS for Service Discovery with NGINX and NGINX Plus](https://www.nginx.com/blog/dns-service-discovery-nginx-plus/?session_ref=direct&url_ref=https%3A%2F%2Fdocs.confluent.io%2Fcloud%2Fcurrent%2Ffaq.html).
+</Accordion>
+
+<Accordion title="How do I connect Confluent Platform components to Confluent Cloud?">
+Connection instructions vary by by Confluent Platform component.
+
+See [Connect Confluent Platform Components to Confluent Cloud](https://docs.confluent.io/cloud/current/cp-component/index.html#cloud-connect) for a list of topics.
+</Accordion>
+
+<Accordion title="How do I grant other users access to my cluster?">
+Confluent provides a variety of ways to manage access to your data. See [User account types](https://docs.confluent.io/cloud/current/security/authenticate/user-identities/user-accounts/overview.html#user-accounts) for more information.
+</Accordion>
+
+<Accordion title="Can I use the same user account for multiple Confluent Cloud organizations?">
+Yes. For details, see [Manage Multiple Organizations on Confluent Cloud](https://docs.confluent.io/cloud/current/security/access-control/hierarchy/organizations/multiple-organizations.html#multiple-organizations).
+</Accordion>
+
+<Accordion title="Can I be auto-notified about failures or incidents?">
+Yes, you can view and subscribe to the [Confluent Cloud status page](https://status.confluent.cloud/?session_ref=direct&url_ref=https%3A%2F%2Fdocs.confluent.io%2Fcloud%2Fcurrent%2Ffaq.html).
+</Accordion>
+
+<Accordion title="Can I get help troubleshooting failures on my own before I contact support?">
+Yes, use this [support article](https://support.confluent.io/hc/en-us/articles/7781369837204-What-to-check-if-Confluent-Cloud-is-unreachable?session_ref=direct&url_ref=https%3A%2F%2Fdocs.confluent.io%2Fcloud%2Fcurrent%2Ffaq.html) to troubleshoot connectivity issues with Confluent Cloud.
+</Accordion>
+
+<Accordion title="Can I access logs for Confluent Cloud services?">
+Internal service logs for Confluent Cloud managed services (such as Kafka brokers, Schema Registry, and other infrastructure components) are not directly accessible to customers, but there are several tools and approaches to help you debug and monitor your streaming applications.
+
+**General monitoring and debugging tools:**
+
+The [Confluent Cloud Metrics](https://docs.confluent.io/cloud/current/monitoring/metrics-api.html#metrics-api) provides actionable operational metrics about your Confluent Cloud deployment. The Confluent Cloud Console shows cluster activity and usage relative to your cluster's capacity. The Cloud Console also includes [topic management](https://docs.confluent.io/cloud/current/topics/overview.html#cloud-topics-manage) and [consumer lag monitoring](https://docs.confluent.io/cloud/current/monitoring/monitor-lag.html#cloud-monitoring-lag). [Build Streaming Applications](https://docs.confluent.io/cloud/current/client-apps/index.html#ccloud-best-practices) details best practices for configuring, monitoring, and debugging Kafka clients.
+
+**Component-specific logging options:**
+
+For some Confluent Cloud services, specific logging and monitoring capabilities are available:
+
+- **Audit logs**: [Confluent Cloud audit logs](https://docs.confluent.io/cloud/current/monitoring/audit-logging/cloud-audit-log-concepts.html#cloud-audit-logs) track administrative and data plane activities within your organization.
+- **Connector events**: [View connector events](https://docs.confluent.io/cloud/current/connectors/logging-cloud-connectors.html#ccloud-connector-logging) to monitor and troubleshoot your connectors.
+- **Flink user-defined functions**: [Enable logging in Flink UDFs](https://docs.confluent.io/cloud/current/flink/how-to-guides/enable-udf-logging.html#flink-sql-enable-udf-logging) for custom application debugging.
+- **ksqlDB processing logs**: Monitor ksqlDB application health using [ksqlDB processing logs](https://docs.confluent.io/cloud/current/ksqldb/monitoring-ksqldb.html#cloud-ksql-monitor).
+
+For comprehensive monitoring guidance, see [Confluent Cloud Metrics](https://docs.confluent.io/cloud/current/monitoring/metrics-api.html#metrics-api).
+</Accordion>
+
+<Accordion title="Can I chat live in Cloud Console?">
+Yes, to chat with a live sales representative from the AI Assistant, you must have pop-ups enabled in your browser.
+</Accordion>
+
+<Accordion title="Can deleted Confluent Cloud components be restored?">
+No. When you delete components from your Confluent Cloud account, they are permanently deleted and cannot be restored.
+</Accordion>
+
+<Accordion title="How do I change support plans?">
+You can manage your support plan by clicking the help icon in the upper-right corner of the Confluent Cloud window. From the menu that appears, click **Support Plans**.
+
+[![_images/cloud-support-option.png](https://docs.confluent.io/cloud/current/_images/cloud-support-option.png)](https://docs.confluent.io/cloud/current/_images/cloud-support-option.png)
+
+The **Support Plans** page shows which plan you have currently. You can also choose a different plan from this page by clicking **Select** in the description of the plan. The next window that opens shows the pricing details for that plan and asks you to confirm your support plan upgrade. Click **Confirm upgrade** to upgrade, or click **Close** to cancel. See [Confluent Support for Confluent Cloud](https://docs.confluent.io/cloud/current/support.html#support-plans-overview) for more information.
+
+<Important>
+Downgrade restrictions apply to support plan purchases. Your current support level will stay in effect until the end of the current calendar month. However, if you downgrade within the month of purchase, your current support plan level is maintained until the end of the **next full** calendar month.
+</Important>
+</Accordion>
+
+<Accordion title="What are the recommended JVM settings for Java clients?">
+There are two recommended JVM settings for Java clients:
+
+**JVM Security configuration**
+
+```java
+java.security.Security.setProperty("networkaddress.cache.ttl" , "30");
+java.security.Security.setProperty("networkaddress.cache.negative.ttl" , "0");
+```
+
+**Kafka Producer and Consumer configuration**
+
+```properties
+consumer.client.dns.lookup="use_all_dns_ips"
+producer.client.dns.lookup="use_all_dns_ips"
+```
+
+For more on configuring Java clients, see [Configure clients](https://docs.confluent.io/cloud/current/client-apps/config-client.html#ccloud-clients).
+</Accordion>
+
+<Accordion title="How do I access the Cloud Console?">
+Access the Cloud Console at the following URL:
+
+[https://confluent.cloud](https://confluent.cloud/?session_ref=direct&url_ref=https%3A%2F%2Fdocs.confluent.io%2Fcloud%2Fcurrent%2Ffaq.html)
+
+To access the console, you will be required to sign in to your Confluent Cloud account. You can sign up for a [free account](https://docs.confluent.io/cloud/current/get-started/free-trial.html#free-trial), if you don't have an account.
+</Accordion>
+
+<Accordion title="What web browsers does Cloud Console support?">
+The latest stable versions of the following web browsers are supported by Confluent Cloud Console:
+
+- [Apple Safari](https://www.apple.com/safari/?session_ref=direct&url_ref=https%3A%2F%2Fdocs.confluent.io%2Fcloud%2Fcurrent%2Ffaq.html)
+- [Google Chrome](https://www.google.com/chrome/?session_ref=direct&url_ref=https%3A%2F%2Fdocs.confluent.io%2Fcloud%2Fcurrent%2Ffaq.html)
+- [Mozilla Firefox](https://www.mozilla.org/en-US/firefox/new/?session_ref=direct&url_ref=https%3A%2F%2Fdocs.confluent.io%2Fcloud%2Fcurrent%2Ffaq.html)
+</Accordion>
+
+<Accordion title="What user session timeouts does Cloud Console require?">
+Each time you access your Confluent Cloud account in the Cloud Console from a web browser, you will be required to sign in. There are limits on how long you can remained signed in to your account with and without activity. The limits are as follows:
+
+- Idle timeout: If no activity is seen in the Cloud Console browser tab for 30 minutes, you will be logged out.
+- Maximum timeout: You can be logged in to Confluent Cloud for a maximum of 8 hours. After 8 hours, you will be logged out and must sign in again. This is enforced regardless of activity.
+
+These are default settings and cannot be configured or changed.
+</Accordion>
+
+<Accordion title="What domains does the Cloud Console require?">
+The Cloud Console requires access to the following domains to function properly:
+
+- `https://confluent.cloud`
+- `https://login.confluent.io`
+- `https://api.confluent.cloud`
+- Access to static assets, such as fonts and images:
+	- `https://cloud-static.confluent.io`
+	- `https://fonts.googleapis.com`
+	- `https://fonts.gstatic.com`
+- Access to Stripe (payment info):
+	- `https://js.stripe.com`
+	- `https://m.stripe.network`
+	- `https://m.stripe.com`
+	- `https://q.stripe.com`
+- Access to the Confluent Metrics API:
+	- `https://api.telemetry.confluent.cloud`
+
+The following domains are not required for the Cloud Console to operate properly, but are recommended:
+
+- Sentry, for debugging purposes:
+	- `https://o114100.ingest.sentry.io`
+- For access to on-page help:
+	- `https://cdn.contentful.com`
+</Accordion>
+
+<Accordion title="How do I access Confluent CLI and support from Cloud Console?">
+See instructions to install and use the Confluent CLI, and access Confluent support and tools from options located at the bottom of the navigation menu.
+
+[![Confluent Cloud support](https://docs.confluent.io/cloud/current/_images/cloud-cli-support.png)](https://docs.confluent.io/cloud/current/_images/cloud-cli-support.png)
+</Accordion>
+
+<Accordion title="How do I install the CLI from Cloud Console?">
+Choose **CLI and tools**, located at the bottom of the navigation menu. Select the **Confluent CLI** tab for step-by-step instructions to install and access your Confluent Cloud environment with the Confluent CLI. For more information about how to install and use the Confluent CLI, see [Confluent CLI](https://docs.confluent.io/confluent-cli/current/install.html#cli-install).
+</Accordion>
+
+<Accordion title="How do I access support from Cloud Console?">
+To access Confluent support, choose **Support** located at the bottom of the navigation menu. The support plans display, with your current plan indicated. See [Confluent Cloud support plans](https://www.confluent.io/confluent-cloud/support/?session_ref=direct&url_ref=https%3A%2F%2Fdocs.confluent.io%2Fcloud%2Fcurrent%2Ffaq.html) for details about the plans.
+</Accordion>
+
+<Accordion title="How do I change my password in Cloud Console?">
+1. From the **Administration** menu, click **Settings** > **Reset password**.
+2. An email will be sent to the email address associated with the account to reset your password.
+	[![Change Confluent Cloud password](https://docs.confluent.io/cloud/current/_images/cloud-password.png)](https://docs.confluent.io/cloud/current/_images/cloud-password.png)
+</Accordion>
+
+<Accordion title="How do I add users in Cloud Console?">
+To add a user:
+
+1. From the **Administration** menu, click **Accounts & access**, and click **+Add user**.
+2. Enter an email address, select an **Access Role**, and choose a **Scope**.
+3. Click **Review** and then **Create**.
+
+For more information, see [Local user: username/password](https://docs.confluent.io/cloud/current/security/authenticate/user-identities/user-accounts/manage-local-user-accounts.html#local-user-username-password).
+</Accordion>
+
+<Accordion title="How do I collect troubleshooting info about issues in Cloud Console?">
+If issues occur in Cloud Console, consider generating a HAR file and uploading it to the [Confluent Community Slack channel](https://confluentcommunity.slack.com/archives/C05T5F96UQ7?session_ref=direct&url_ref=https%3A%2F%2Fdocs.confluent.io%2Fcloud%2Fcurrent%2Ffaq.html) or sending it to the [flink preview email address](https://docs.confluent.io/cloud/current/). For more information, see [Generate a HAR file for Troubleshooting on Confluent Cloud](https://docs.confluent.io/cloud/current/release-notes/generate-har-file.html#ccloud-har-file).
+</Accordion>
+
+<Accordion title="Can I create a custom DNS name for Confluent Cloud bootstrap endpoints?">
+You must use the original cluster bootstrap endpoint name. If you change the bootstrap name by creating a DNS record, TLS hostname validation fails. Confluent Cloud does not support custom DNS names. Custom DNS names are domain names that you configure to point to your Confluent Cloud cluster.
+</Accordion>
+
+<Accordion title="How can I delete my account?">
+When you delete your Confluent Cloud organization, you permanently remove all data and resources associated with it. To delete your local Confluent Cloud account, follow the steps in [Delete an organization](https://docs.confluent.io/cloud/current/security/access-control/hierarchy/organizations/cloud-organization.html#delete-organization).
+</Accordion>
+
+<Accordion title="How can I provide feedback for Confluent documentation?">
+To provide feedback on the Confluent documentation, click the **Give us feedback** button located near the footer of each page.
+</Accordion>
+
+<Accordion title="How do I sign up for Confluent Cloud in Jio regions?">
+To get access to Confluent Cloud as a Jio customer, you must contact Confluent Cloud support. You must be a Jio customer to use Confluent Cloud in Jio regions. Create your Confluent account, then then email `jio-onboarding@confluent.io` with your Jio subscription id and your Confluent Cloud organization id to deploy resources in Jio region.
+</Accordion>
+
+<Accordion title="Does Cloud Console have dark mode?">
+Dark mode is available in Cloud Console. With dark mode, you can set your color theme to dark, light, or system. System uses the color theme of your computer for the color theme in Cloud Console.
+
+If you want to disable or turn off dark mode, use the following procedure:
+
+**To manage color theme**:
+
+1. Sign in to Confluent Cloud.
+2. From **Administration**, select your name (Settings).
+3. Select **Preferences**.
+4. In **Color Theme**, choose one of the following:
+	- Light Mode
+	- Dark Mode
+	- System Preferences
+</Accordion>
+
+<Accordion title="Is there a way to connect to a Confluent Cloud cluster using Confluent CLI and an API key?">
+Yes, you can connect to Confluent Cloud using the [CLI](https://docs.confluent.io/confluent-cli/current/connect.html) and an API key. For more information, see [Connect Confluent CLI to Confluent Cloud Cluster](https://docs.confluent.io/confluent-cli/current/connect.html).
+</Accordion>
+
+<Accordion title="Can I configure a source connector to pull from a private PostgreSQL database?">
+Yes, however you must first set up PrivateLink or a public IP allowlist depending on your database network setup.
+</Accordion>
+
+<Accordion title="How do I get access to Health+ to monitor Confluent Platform?">
+[Health+](https://docs.confluent.io/platform/current/health-plus/index.html) is offered as a service that includes free access to basic features, with the option to upgrade to the paid tier for the full range of Health+ benefits. You can enable it by using the Health+ tab in your Cloud Console, or contact support for provisioning. For more information, see [Monitor Confluent Platform with Health+](https://docs.confluent.io/platform/current/health-plus/index.html).
+</Accordion>
+
+<Accordion title="Can I use the same API key across different environments in Confluent Cloud?">
+No, you cannot use the same API key across different environments in Confluent Cloud. API keys are scoped to specific Kafka clusters and environments. You need to generate separate API keys per environment. For more information, see [Use API Keys to Authenticate to Confluent Cloud](https://docs.confluent.io/cloud/current/security/authenticate/workload-identities/service-accounts/api-keys/overview.html#api-keys-overview).
+</Accordion>
+
+<Accordion title="How do I get alerted when a connector stops or fails?">
+To get alerts for connector failures, use [Connector notifications](https://docs.confluent.io/cloud/current/monitoring/configure-notifications.html#ccloud-connector-notifications). For more information, see [Notifications for Confluent Cloud](https://docs.confluent.io/cloud/current/monitoring/configure-notifications.html#ccloud-notifications).
+</Accordion>
+
+<Accordion title="Is there a way to view API usage metrics or limits?">
+Confluent Cloud does not expose detailed API usage stats currently. You can use [audit logs](https://docs.confluent.io/cloud/current/monitoring/audit-logging/cloud-audit-log-concepts.html#cloud-audit-logs) and CLI scripts to monitor usage manually.
+</Accordion>
+
+<Accordion title="Is it possible to use REST Proxy to produce messages in Confluent Cloud?">
+Yes, REST Proxy is supported. Use the API endpoint structure with required headers including cluster ID and credentials. For more information, see [Connect Self-Managed REST Proxy to Confluent Cloud](https://docs.confluent.io/cloud/current/cp-component/kafka-rest-config.html#cloud-kafka-rest-config).
+</Accordion>
+
+<Accordion title="How can I set up custom RBAC roles beyond the predefined ones?">
+Custom roles are not currently supported. You can combine existing [RBAC roles](https://docs.confluent.io/cloud/current/security/access-control/rbac/overview.html#rbac-overview) with resource scoping to meet most needs.
+</Accordion>
+
+<Accordion title="Can I use Confluent Cloud within a private VPC using PrivateLink?">
+Yes, PrivateLink is supported for AWS. You need to create VPC endpoints in supported regions. For more information, see [AWS PrivateLink Overview in Confluent Cloud](https://docs.confluent.io/cloud/current/networking/aws-privatelink-overview.html#cloud-networking-aws-privatelink-overview).
+</Accordion>
+
+<Accordion title="How do I ensure a connector writes data with specific field mappings to a database?">
+Use transforms and custom mappings in the connector configuration. For more information, see the [Single Message Transforms (SMT) documentation](https://docs.confluent.io/cloud/current/connectors/single-message-transforms.html#cc-single-message-transforms).
+</Accordion>
+
+<Accordion title="Can I set schema compatibility to 'none' for a subject in Schema Registry?">
+Yes, this can be set using the Cloud Console, Confluent CLI, or Schema Registry REST API. For more information, see [Compatibility types](https://docs.confluent.io/cloud/current/sr/fundamentals/schema-evolution.html#sr-compatibility-types).
+</Accordion>
+
+<Accordion title="Is it possible to change a connector's configuration without stopping it?">
+Most configuration changes require pausing and restarting the connector, however, some minor changes may apply dynamically. For more information, see [Confluent Cloud API for Connect Usage Examples](https://docs.confluent.io/cloud/current/connectors/connect-api-section.html#ccloud-connect-api).
+</Accordion>
+
+<Accordion title="How do I ingest data from Google Cloud Storage to Confluent Cloud?">
+Set up the GCS Source Connector with proper bucket access and file format configuration. For more information, see [Google Cloud Storage Source Connector for Confluent Cloud](https://docs.confluent.io/cloud/current/connectors/cc-gcs-source.html#cc-gcs-connect-source).
+</Accordion>
+
+<Accordion title="What causes 'schema not found' errors in a connector?">
+Check the subject naming strategy and ensure the schema exists and is compatible in Schema Registry. For more information, see [Subject name strategy](https://docs.confluent.io/cloud/current/sr/fundamentals/serdes-develop/index.html#sr-schemas-subject-name-strategy).
+</Accordion>
+
+<Accordion title="How do I ensure a sink connector doesn't overwrite existing data in a database?">
+Set insert mode to `insert` and disable `delete.enabled` in the connector configuration.
+</Accordion>
+
+<Accordion title="How do I configure Confluent Cloud for multi-region failover?">
+Use [Cluster Linking](https://docs.confluent.io/cloud/current/multi-cloud/cluster-linking/index.html#cloud-cluster-linking) or multi-region producers for disaster recovery.
+</Accordion>
+
+<Accordion title="Can I encrypt messages end-to-end, beyond TLS in transit?">
+Message encryption at rest is enabled by default. For additional security, you can implement [client-side encryption](https://docs.confluent.io/cloud/current/security/encrypt/csfle/overview.html#csfle-overview).
+</Accordion>
+
+<Accordion title="How can I create a schema with optional fields in Protobuf?">
+Use Protobuf syntax and mark fields as optional using the `optional` keyword in your schema definition. For more information, see [Protobuf Schema Serializer and Deserializer for Schema Registry on Confluent Cloud](https://docs.confluent.io/cloud/current/sr/fundamentals/serdes-develop/serdes-protobuf.html#serdes-and-formatter-protobuf).
+</Accordion>
+</AccordionGroup>

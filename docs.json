@@ -1,0 +1,138 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "aspen",
+  "name": "Confluent Docs",
+  "colors": {
+    "primary": "#0056f9",
+    "light": "#0056f9",
+    "dark": "#0056f9"
+  },
+  "favicon": "/favicon.png",
+  "appearance": {
+    "default": "dark"
+  },
+  "background": {
+    "color": {
+      "dark": "#000000",
+      "light": "#ffffff"
+    }
+  },
+  "fonts": {
+    "body": {
+      "family": "Poppins"
+    },
+    "heading": {
+      "family": "Poppins"
+    }
+  },
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Home",
+        "pages": [
+          "index"
+        ]
+      },
+      {
+        "tab": "Guides",
+        "pages": [
+          "cloud/current/overview",
+          {
+            "group": "Get Started",
+            "pages": [
+              "cloud/current/get-started/confluent-cloud-basics",
+              "cloud/current/kafka-rest/krest-qs",
+              "cloud/current/get-started/free-trial"
+            ]
+          },
+          {
+            "group": "Manage Kafka Clusters",
+            "pages": [
+              "cloud/current/clusters/cluster-types",
+              "cloud/current/clusters/resilience",
+              "cloud/current/multi-cloud/cluster-linking/trouble-cc"
+            ]
+          },
+          {
+            "group": "Govern Data Streams",
+            "pages": [
+              "cloud/current/stream-governance/index"
+            ]
+          },
+          "cloud/current/release-notes/upgrade-policy"
+        ]
+      },
+      {
+        "tab": "API Reference",
+        "openapi": "openapi.json"
+      },
+      {
+        "tab": "FAQs",
+        "pages": [
+          "cloud/current/faq",
+          "cloud/current/multi-cloud/cluster-linking/faqs-cc"
+        ]
+      },
+      {
+        "tab": "Changelog",
+        "pages": [
+          "cloud/current/release-notes/index"
+        ]
+      }
+    ],
+    "global": {
+      "anchors": [
+        {
+          "anchor": "Contact Us",
+          "href": "https://www.confluent.io/contact/",
+          "icon": "envelope"
+        },
+        {
+          "anchor": "Blog",
+          "href": "https://www.confluent.io/blog/",
+          "icon": "newspaper"
+        }
+      ]
+    }
+  },
+  "logo": {
+    "light": "/logo/light.png",
+    "dark": "/logo/dark.png",
+    "href": "https://www.confluent.io"
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "Contact Sales",
+        "href": "https://www.confluent.io/contact"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Start For Free",
+      "href": "https://www.confluent.io/get-started/"
+    }
+  },
+  "contextual": {
+    "options": [
+      "copy",
+      "view",
+      "chatgpt",
+      "claude",
+      "perplexity",
+      "mcp",
+      "cursor",
+      "vscode"
+    ]
+  },
+  "footer": {
+    "socials": {
+      "facebook": "https://www.facebook.com/confluentinc/",
+      "github": "https://github.com/confluentinc",
+      "instagram": "https://www.instagram.com/confluent_inc/",
+      "linkedin": "https://www.linkedin.com/company/confluent",
+      "x": "https://twitter.com/ConfluentInc",
+      "youtube": "https://www.youtube.com/confluent"
+    }
+  }
+}

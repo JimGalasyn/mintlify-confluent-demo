@@ -1,0 +1,281 @@
+---
+title: "List of Environments"
+api: "GET https://api.confluent.cloud/org/v2/environments"
+contentType: "application/json"
+description: "Retrieve a sorted, filtered, paginated list of all environments."
+---
+
+<Accordion title="Authorizations">
+
+```
+cloud-api-key
+or
+confluent-sts-access-token
+```
+
+<Icon icon="lock" /> **HTTP: cloud-api-key**
+Authenticate with Cloud API Keys using HTTP Basic Auth. Treat the Cloud API Key ID as the username and Cloud API Key Secret as the password.
+
+**HTTP Authorization Scheme**: `basic`
+
+<Icon icon="lock" /> **HTTP: confluent-sts-access-token**
+Authenticate with Confluent API using this credentials (JSON Web Tokens) following OAuth 2.0.
+
+**Flow Type**: `clientCredentials` <br />
+**Token URL**: `https://api.confluent.cloud/sts/v1/oauth2/token`
+</Accordion>
+
+## Query Parameters
+
+<ParamField path="page_size" type="integer" default="10">
+  A pagination size for collection requests.
+</ParamField>
+
+<ParamField path="page_token" type="string">
+  An opaque pagination token for collection requests.
+</ParamField>
+
+## Responses
+
+<AccordionGroup>
+<Accordion title="200 OK">
+
+### Response Headers
+
+<ResponseField name="X-Request-Id" type="string">
+  The unique identifier for the API request.
+</ResponseField>
+
+<ResponseField name="X-RateLimit-Limit" type="integer">
+  The maximum number of requests you're permitted to make per time period.
+</ResponseField>
+
+<ResponseField name="X-RateLimit-Remaining" type="integer">
+  The number of requests remaining in the current rate limit window.
+</ResponseField>
+
+<ResponseField name="X-RateLimit-Reset" type="integer">
+  The relative time in seconds until the current rate-limit window resets. This differs from Github and Twitter's same-named header which uses UTC epoch seconds. We use relative time to avoid client/server time synchronization issues.
+</ResponseField>
+
+### Response Schema
+
+<ResponseField name="api_version" type="string" required default="org/v2">
+  APIVersion defines the schema version of this representation of a resource.
+</ResponseField>
+
+<ResponseField name="kind" type="string" required default="EnvironmentList">
+  Kind defines the object this REST resource represents.
+</ResponseField>
+
+<ResponseField name="metadata" type="object" required>
+  ListMeta describes metadata that resource collections may have
+</ResponseField>
+
+<ResponseField name="data" type="Array of objects" required unique>
+  A data property that contains an array of resource items. Each entry in the array is a separate resource.
+</ResponseField>
+
+</Accordion>
+<Accordion title="400 Bad Request">
+
+### Response Headers
+
+<ResponseField name="X-Request-Id" type="string">
+  The unique identifier for the API request.
+</ResponseField>
+
+### Response Schema
+
+<ResponseField name="errors" type="Array of objects (Error)" required unique>
+  List of errors which caused this operation to fail
+</ResponseField>
+
+</Accordion>
+<Accordion title="401 Unauthorized">
+
+### Description
+
+The request lacks valid authentication credentials for this resource.
+
+### Response Headers
+
+<ResponseField name="X-Request-Id" type="string">
+  The unique identifier for the API request.
+</ResponseField>
+
+<ResponseField name="WWW-Authenticate" type="string">
+  Example: "Basic error=\"invalid_key\", error_description=\"The API Key is invalid\"". Indicates the authentication scheme and parameters applicable to the target resource.
+</ResponseField>
+
+### Response Schema
+
+<ResponseField name="errors" type="Array of objects (Error)" required unique>
+  List of errors which caused this operation to fail
+</ResponseField>
+
+</Accordion>
+<Accordion title="403 Forbidden">
+
+### Description
+
+The access credentials were considered insufficient to grant access.
+
+### Response Headers
+
+<ResponseField name="X-Request-Id" type="string">
+  The unique identifier for the API request.
+</ResponseField>
+
+### Response Schema
+
+<ResponseField name="errors" type="Array of objects (Error)" required unique>
+  List of errors which caused this operation to fail
+</ResponseField>
+
+</Accordion>
+
+<Accordion title="429 Rate Limit Exceeded">
+
+### Response Headers
+
+<ResponseField name="X-Request-Id" type="string">
+  The unique identifier for the API request.
+</ResponseField>
+
+<ResponseField name="X-RateLimit-Limit" type="integer">
+  The maximum number of requests you're permitted to make per time period.
+</ResponseField>
+
+<ResponseField name="X-RateLimit-Remaining" type="integer">
+  The number of requests remaining in the current rate limit window.
+</ResponseField>
+
+<ResponseField name="X-RateLimit-Reset" type="integer">
+  The relative time in seconds until the current rate-limit window resets. This differs from Github and Twitter's same-named header which uses UTC epoch seconds. We use relative time to avoid client/server time synchronization issues.
+</ResponseField>
+
+<ResponseField name="Retry-After" type="integer">
+  The number of seconds to wait until the rate limit window resets. Only sent when the rate limit is reached.
+</ResponseField>
+
+</Accordion>
+<Accordion title="500 Opps! Something went wrong.">
+
+### Response Headers
+
+<ResponseField name="X-Request-Id" type="string">
+  The unique identifier for the API request.
+</ResponseField>
+
+### Response Schema
+
+<ResponseField name="errors" type="Array of objects (Error)" required unique>
+  List of errors which caused this operation to fail
+</ResponseField>
+
+</Accordion>
+</AccordionGroup>
+
+<RequestExample>
+```curl
+curl --request GET \
+  --url https://api.confluent.cloud/org/v2/environments \
+  --header 'Authorization: Basic REPLACE_BASIC_AUTH'
+```
+</RequestExample>
+
+<ResponseExample>
+```json 200
+{
+  "api_version": "org/v2",
+  "kind": "EnvironmentList",
+  "metadata": {
+    "first": "https://api.confluent.cloud/org/v2/environments",
+    "last": "https://api.confluent.cloud/org/v2/environments?page_token=bcAOehAY8F16YD84Z1wT",
+    "prev": "https://api.confluent.cloud/org/v2/environments?page_token=YIXRY97wWYmwzrax4dld",
+    "next": "https://api.confluent.cloud/org/v2/environments?page_token=UvmDWOB1iwfAIBPj6EYb",
+    "total_size": 123
+  },
+  "data": [
+    {
+      "api_version": "org/v2",
+      "kind": "Environment",
+      "id": "dlz-f3a90de",
+      "metadata": {
+        "self": "https://api.confluent.cloud/org/v2/environments/e-12345",
+        "resource_name": "crn://confluent.cloud/organization=9bb441c4-edef-46ac-8a41-c49e44a3fd9a/environment=e-12345",
+        "created_at": "2006-01-02T15:04:05-07:00",
+        "updated_at": "2006-01-02T15:04:05-07:00",
+        "deleted_at": "2006-01-02T15:04:05-07:00"
+      },
+      "display_name": "prod-finance01",
+      "stream_governance_config": {
+        "package": "string"
+      }
+    }
+  ]
+}
+```
+
+```json 400
+{
+  "errors": [
+    {
+      "id": "ed42afdc-f0d5-4c0d-b428-9fc6ed6e279d",
+      "status": "400",
+      "code": "invalid_filter",
+      "title": "Invalid Filter",
+      "detail": "The 'delorean' resource can't be filtered by 'num_doors'",
+      "source": {
+        "parameter": "num_doors"
+      }
+    }
+  ]
+}
+```
+
+
+```json 401
+{
+  "errors": [
+    {
+      "id": "ed42afdc-f0d5-4c0d-b428-9fc6ed6e279d",
+      "status": "401",
+      "code": "user_unauthenticated",
+      "title": "Authentication Required",
+      "detail": "Valid authentication credentials must be provided"
+    }
+  ]
+}
+```
+
+
+```json 403
+{
+  "errors": [
+    {
+      "id": "ed42afdc-f0d5-4c0d-b428-9fc6ed6e279d",
+      "status": "403",
+      "code": "user_unauthorized",
+      "title": "User Access Unauthorized",
+      "detail": "The user 'mcfly' is not allowed to access the 'delorean' resource without the 'plutonium' role."
+    }
+  ]
+}
+```
+
+```json 500
+{
+  "errors": [
+    {
+      "id": "ed42afdc-f0d5-4c0d-b428-9fc6ed6e279d",
+      "status": "500",
+      "code": "out_of_gas",
+      "title": "DeLorean Out Of Gas",
+      "detail": "The DeLorean has run out of gas, but Doc Brown will fill 'er up for you asap"
+    }
+  ]
+}
+```
+</ResponseExample>

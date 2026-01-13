@@ -1,0 +1,121 @@
+---
+title: "Troubleshoot Cluster Linking on Confluent Cloud"
+sidebarTitle: "Troubleshooting"
+description: "This page describes common errors you may encounter when creating cluster links, and how to address them. Task error codes for cluster link and mirror topic commands are also listed."
+---
+
+## Errors when Creating a Cluster Link
+
+The command to create a cluster link can fail with one of the following error codes. A customized error message will also be returned, to provide specific context about the clusters being used.
+
+### UNRESOLVABLE_BOOTSTRAP_ERROR
+
+**Meaning:** The destination cluster (or, for a source-initiated link, the source cluster) could not resolve the provided bootstrap server to an IP address. In other words, there was no DNS entry for this bootstrap server in the cluster’s DNS.
+
+**Solutions:**
+
+- If the provided source cluster bootstrap server is a URL with a FQDN that is not Confluent Cloud (for example, `kafka.example.com:9092`), then the DNS is not properly configured for the destination cluster to resolve that FQDN to an IP address.
+- If the destination cluster is a Confluent Cloud cluster, this error is likely because your FQDN relies on your private DNS; there is no way to provide Confluent Cloud with access to your private DNS. In this case, you have two options:
+	- The best way to resolve this error is to use a FQDN that is registered in a public DNS. Alternatively, use an IP address (such as, `10.10.4.24:9092`) for the bootstrap server (instead of a host name). Your source cluster must have an IP address advertised listener on every broker before you can use Cluster Linking with an IP address.
+	- Alternatively, you can register this FQDN with a public DNS, pointing to the appropriate IP address of your broker, proxy, or load balancer (internal IPs that can be registered in a public DNS), so that Confluent Cloud can resolve this FQDN to an IP that it can reach.
+- If the destination cluster is a Confluent Platform cluster, then you can attempt to fix the destination cluster’s DNS. Ensure the route to your source cluster allows traffic over port `9092`.
+- If the provided source cluster bootstrap server is for Confluent Cloud (for example, `pkc-lmn0p.us-west-2.aws.confluent.cloud:9092`), then contact Confluent Support.
+
+### BOOTSTRAP_TCP_CONNECTION_FAILED_ERROR
+
+**Meaning:** The destination cluster cannot reach a Apache Kafka® cluster at the provided source bootstrap server.
+
+**Solutions:**
+
+If both clusters are Confluent Cloud clusters:
+
+- First verify that your source cluster is up and running, and in a healthy state. (If it isn’t, this will cause the error.)
+- If the source cluster has Internet networking, contact Confluent Support.
+- If the source cluster has Transit Gateway networking, follow the steps for [troubleshoot Transit Gateway connectivity](https://docs.confluent.io/cloud/current/multi-cloud/cluster-linking/private-networking.html#troubleshoot-transit-gateway-connectivity)
+- If the source cluster does not have Internet networking or Transit Gateway networking, make sure that the two Confluent Cloud clusters exist in the same Confluent Cloud network, region, and cloud provider. Cluster Linking is not supported between private Confluent Cloud clusters in different Confluent Cloud networks, other than with Transit Gateway.
+
+If the source cluster is a Confluent Platform or Kafka cluster, and the destination cluster is a Confluent Cloud cluster: Your Confluent Cloud cluster cannot reach your source cluster and you must resolve this. Providing network access for Confluent Cloud to reach your source cluster is your responsibility.
+
+- If you are intending to access a source cluster over the internet, validate that all of your source cluster’s brokers have public internet IP addresses. You can verify this by consuming from your cluster (for example, with `kafka-console-consumer`) on a machine that does not have VPN or other private access to your cluster. For the consumer configuration, enter the bootstrap servers and security configuration that you provided to the cluster link.
+- If you are intending to access a source cluster over private internet–that is, using private IP addresses–this error indicates that you have not properly set up the networking between Confluent Cloud and the source cluster. Double check that your networking meets these requirements:
+	- The Confluent Cloud cluster must have a networking type that is either VPC Peered, VNet Peered, or Transit Gateway.
+	- You should test that the machines that host your source cluster brokers have connectivity to the Confluent Cloud cluster, as described in [Test connectivity to Confluent Cloud](https://docs.confluent.io/cloud/current/networking/testing.html). Under some circumstances, you can also test connectivity from Confluent Cloud VPC or VNet to your source cluster using a tool like the [AWS VPC Reachability Analyzer](https://docs.aws.amazon.com/vpc/latest/reachability/what-is-reachability-analyzer.html?session_ref=direct&url_ref=https%3A%2F%2Fdocs.confluent.io%2Fcloud%2Fcurrent%2Fmulti-cloud%2Fcluster-linking%2Ftrouble-cc.html).
+	- If the source cluster is in a cloud VPC or VNET and the Confluent Cloud cluster’s networking type is VPC Peered or VNET Peered, the Confluent Cloud VPC must be peered to the VPC that hosts the source cluster.
+	- If the source cluster is in a cloud VPC or VNET and the Confluent Cloud cluster’s networking type is VPC Peered or VNET Peered, the Transit Gateway routing must be configured to allow the Confluent Cloud VPC to reach the VPC that hosts the source cluster, and vice versa.
+	- If the source cluster is not hosted in a public cloud—for instance, if it is in an on-premises datacenter––make sure that you are using AWS Transit Gateway or GCP Route Import to provide connectivity between your cluster’s host machines and Confluent Cloud.
+
+### AUTHENTICATION_ERROR
+
+**Meaning:** The source cluster security credential provided to the cluster link was not able to authenticate with the source cluster.
+
+**Solutions:**
+
+- Confirm the security configuration that you assigned your cluster link.
+- For a Confluent Cloud source cluster, confirm that your link configuration has these properties:
+	If using API keys: - `security.protocol=SASL_SSL` - `sasl.mechanism=PLAIN` - `sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username='<source cluster API key>' password='<source cluster API secret>';`
+	If using OAuth: - same parameters as your consumers use to authenticate with OAuth on the source cluster
+- For a Confluent Platform or Kafka source cluster, verify that the cluster link principal used in your link configuration is using an authentication mechanism that is enabled on the source cluster.
+
+### INVALID_BOOTSTRAP_INTERNAL_ENDPOINT_ERROR
+
+**Meaning:** Your source cluster bootstrap server was to a private internal endpoint or port that Cluster Linking is not allowed to access in Confluent Cloud.
+
+**Solution:** Verify that your bootstrap server uses port `9092`.
+
+### TIMEOUT_ERROR
+
+**Meaning:** The operation to create the cluster link timed out. **Solution:** Contact Confluent Support.
+
+### UNKNOWN
+
+**Meaning:** An unexpected error has occurred. **Solution:** Contact Confluent Support.
+
+## Troubleshoot an unavailable cluster link
+
+After a cluster link has been created, it can go into a state labeled UNAVAILABLE, which can be seen when listing the cluster link in the CLI or REST API, or through the `link-count` metric in Metrics API in Confluent Cloud. This state means the destination cluster does not have connectivity to the source cluster and cannot copy data from the source cluster.
+
+To resolve this error, first, get more details about the error by describing the cluster link in the CLI or REST API. That response returns an error code and a dynamic, customized error message. Then, troubleshoot the error using the other methods described on this page.
+
+## Task error codes
+
+The following error codes are shared by cluster link and mirror topic commands to indicate problems with the link tasks or the mirror transition tasks.
+
+With the exception of `INTERNAL_ERROR`, these are all user-created errors. In other words, if the error code is `INTERNAL_ERROR`, then Confluent will have been alerted and will be working on fixing the issue. Otherwise, the error is customer created and the customer can and should alert on, as the error requires customer action to resolve.
+
+| Task Status | Description |
+| :--- | :--- |
+| `UNKNOWN` | Error cause cannot be determined. |
+| `INTERNAL_ERROR` | System error caused by Confluent software. This type of error automatically alerts Confluent, and resolution is in work. |
+| `AUTHENTICATION_ERROR` | Authentication credentials are not properly configured. |
+| `AUTHORIZATION_ERROR` | Authorization credentials are not properly configured. |
+| `BROKER_AUTHENTICATION_ERROR` | Authentication credentials on the broker are not properly configured Confluent Platform. |
+| `BROKER_AUTHORIZATION_ERROR` | Authorization credentials on the broker are not properly configured Confluent Platform. |
+| `MISCONFIGURATION_ERROR` | A misconfiguration is causing errors. |
+| `REMOTE_LINK_NOT_FOUND_ERROR` | The remote link was unexpectedly not found. |
+| `LINK_NOT_FOUND_ERROR` | The cluster link cannot be found. |
+| `CONSUMER_GROUP_IN_USE_ERROR` | The consumer group is active on the destination, causing offsets to not be synced. |
+| `SECURITY_DISABLED_ERROR` | No authorizer is configured on the source cluster. |
+| `TOPIC_EXISTS_ERROR` | A topic exists on the destination unexpectedly. |
+| `POLICY_VIOLATION_ERROR` | The topic transition violates a policy. |
+| `LINK_COORDINATOR_NOT_ENABLED_ERROR` | Cluster link is not enabled. |
+| `ACL_LIMIT_EXCEEDED` | ACLs limit on the link has been exceeded. |
+| `REMOTE_MIRROR_NOT_FOUND_ERROR` | Remote mirror topic is not available. |
+| `UNKNOWN_TOPIC_OR_PARTITION_ERROR` | Either a topic or partition was unexpectedly not found. |
+| `INVALID_TOPIC` | An InvalidTopicException was encountered from the destination cluster. This error would occur, for example, if the auto-create mirror task tries to create a topic on the destination cluster and the topic name is invalid. See the error message for more details. |
+| `SUPPRESSED_ERRORS` | This means some errors were suppressed because too many were encountered. |
+| `INVAILD_REQUEST_ERROR` | An InvalidRequestException was encountered. See the error message for more details. |
+
+## Troubleshooting mirror topics
+
+On Confluent Cloud and Confluent Platform, starting with Confluent Platform 7.5.0, `mirror command describe` on a failed mirror topic returns the cause of the failure. In the case of a failed mirror topic, you have the following choices to remediate (with the repair option on Confluent Platform available in versions 7.6.0 and later):
+
+- Failover or delete the mirror topic.
+- Contact Confluent Support to repair the failed mirror topic for a subset of the failures. Failure causes that can be repaired include the following:
+	- UNSUPPORTED_MESSAGE_FORMAT: Source leader epoch went backwards, source topic may have been recreated.
+	- RECORD_TOO_LARGE: Truncation below high watermark. This can be caused by unclean source leader election or other errors such as inability to detect source topic recreation.
+	- TRUNCATION_BELOW_HIGH_WATERMARK
+
+Mirror topics can be transitioned in various ways (promote, failover, reverse, and so on). Both Confluent Cloud and Confluent Platform provide metrics and APIs that can help you find solutions when things go wrong. To learn more, see the following topics:
+
+- On Confluent Cloud: [Mirror topic state transition](https://docs.confluent.io/cloud/current/cluster-linking/metrics-cc.html#mirror-topic-state-transition)
+- On Confluent Platform: [View mirror topic state transition errors](https://docs.confluent.io/platform/current/multi-dc-deployments/cluster-linking/mirror-topics-cp.html#view-mirror-topic-state-transition-errors)

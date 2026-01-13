@@ -1,0 +1,77 @@
+---
+sidebarTitle: "Release Notes"
+rss: true
+title: "Release Notes for Confluent Cloud"
+description: "Confluent Cloud is regularly updated with improvements and new features. This page highlights significant new and updated features in Confluent Cloud by release date."
+---
+
+## 2025 Releases
+
+<Update label="October 22, 2025">
+Confluent Cloud for Apache Flink® enables creating tables that generate custom sample data. Now you can create *faker tables* that enable you to create custom data generators directly within your Flink stream-processing workflows. This capability enables you to generate a continuous stream of realistic test data without additional infrastructure or costs, streamlining development and testing processes. For more information, see [Generate Custom Sample Data with Confluent Cloud for Apache Flink](https://docs.confluent.io/cloud/current/flink/how-to-guides/custom-sample-data.html#flink-sql-custom-sample-data).
+</Update>
+
+<Update label="October 21, 2025">
+Delta Lake support for Tableflow is generally available. You can now use Tableflow to materialize Apache Kafka® topics as Delta Lake tables in your own storage. For more information, see [Quick Start with Delta Lake Tables](https://docs.confluent.io/cloud/current/topics/tableflow/get-started/quick-start-delta-lake.html#cloud-tableflow-quick-start-delta-lake).
+</Update>
+
+<Update label="October 20, 2025">
+An improved interface that provides a more centralized and streamlined for managing data-at-rest encryption keys (BYOK). This new experience delivers improved transparency, better control, and greater operational efficiency.
+
+- Centralized Hub: A new dedicated location to onboard, view, and manage all data-at-rest encryption keys.
+- Key Identification: Easily assign a friendly, human-readable alias to keys.
+- Usage Details: View total key usage and organizational limits, for example the 20 key per org limit.
+- Operational Status: A new status field that shows the key’s operational state: Ready, Pending, or Validation Failed.
+- Associated Clusters: View the clusters actively using a specific key, with the operational status visible directly in the cluster settings page.
+- Quick Troubleshooting: View the key policy directly in the Cloud Console, for example if key permissions are accidentally removed.
+- Direct Deletion: Delete keys directly from the management interface, eliminating the need to navigate through the previous, multi-step cluster creation workflow.
+- Simplified Search: Use filters to quickly locate specific keys based on criteria like alias, status, CSP, region, key ID, and associated cluster.
+
+For more information, see the [Global Key Management](https://docs.confluent.io/cloud/current/security/encrypt/byok/overview.html#byok-global-key-management).
+</Update>
+
+<Update label="October 17, 2025">
+- Google Cloud Provider Integration for Confluent Cloud and fully-managed connectors is now generally available:
+	- For provider integration setup, see [Integrate with Google Cloud in Confluent Cloud](https://docs.confluent.io/cloud/current/integrations/provider-integrations/create-provider-integration-gc.html#create-provider-integration-gc).
+	- For connector configuration, see [Manage Google Cloud Provider Integration for Fully-Managed Connectors](https://docs.confluent.io/cloud/current/connectors/provider-integration.html#connector-gcp-pi).
+- Google Cloud Provider Integration support is now enabled for the following Confluent Cloud fully-managed connectors:
+	- [Google BigQuery Sink V2 connector](https://docs.confluent.io/cloud/current/connectors/cc-gcp-bigquery-storage-sink.html#cc-gcp-bigquery-storage-sink-setup-connection)
+	- [Google Cloud Storage Sink connector](https://docs.confluent.io/cloud/current/connectors/cc-gcs-sink.html#cc-gcs-storage-sink-sink-setup-connection)
+	- [PostgreSQL CDC Source V2 (Debezium) connector](https://docs.confluent.io/cloud/current/connectors/cc-postgresql-cdc-source-v2-debezium/cc-postgresql-cdc-source-v2-debezium.html#cc-postgresql-source-cdc-v2-debezium-setup-connection)
+- Azure Provider Integration for Confluent Cloud and fully-managed connectors is now generally available:
+	- For provider integration setup, see [Integrate with Azure in Confluent Cloud](https://docs.confluent.io/cloud/current/integrations/provider-integrations/create-provider-integration-azure.html#create-provider-integration-azure).
+	- For connector configuration, see [Manage Azure Provider Integration for Fully-Managed Connectors](https://docs.confluent.io/cloud/current/connectors/provider-integration.html#connector-az-pi).
+- Azure Provider Integration support is now enabled for the following Confluent Cloud fully-managed connectors:
+	- [Azure Cosmos DB Sink V2 connector](https://docs.confluent.io/cloud/current/connectors/cc-azure-cosmos-sink-v2.html#cc-azure-cosmos-v2-sink-setup-connection)
+	- [Azure Data Lake Storage Gen2 Sink connector](https://docs.confluent.io/cloud/current/connectors/cc-azure-datalakeGen2-storage-sink.html#cc-azure-datalakegen2-sink-setup-connection)
+	- [Azure Cosmos DB Source V2 connector](https://docs.confluent.io/cloud/current/connectors/cc-azure-cosmos-source-v2.html#cc-cosmosdb-source-v2-setup-connection)
+	- [Azure Event Hubs Source connector](https://docs.confluent.io/cloud/current/connectors/cc-azure-event-hubs-source.html#cc-azure-event-hubs-source-setup-connection)
+</Update>
+
+<Update label="October 15, 2025">
+Support for self-managed encryption keys (BYOK) with Tableflow is now available on AWS Dedicated clusters. You can now use your own encryption keys to encrypt Tableflow data, ensuring consistent encryption across your Kafka data and Tableflow tables. For more information, see [Use self-managed encryption keys with Tableflow](https://docs.confluent.io/cloud/current/security/encrypt/byok/tableflow-byok.html#tableflow-byok-integration).
+</Update>
+
+<Update label="October 14, 2025">
+- AI-assisted troubleshooting is now available as a Preview feature for fully-managed connectors, which provides auto-generated summaries of connector issues in the Confluent Cloud Console. For more information, see [AI-Assisted Troubleshooting for Confluent Cloud Connectors](https://docs.confluent.io/cloud/current/connectors/reference/cflt-troubleshoot-assistant.html#cloud-ai-assist).
+- The Confluent Cloud Translate API is now generally available. You can now translate a self-managed connector configuration to a fully-managed connector configuration using this API. For more information, see [Migrate a connector configuration](https://docs.confluent.io/cloud/current/connectors/connect-api-section.html#connector-migration-api).
+- The [KeyToValue](https://docs.confluent.io/cloud/current/connectors/transforms/keytovalue.html#keytovalue) SMT for fully-managed connectors is generally available.
+- Confluent Hub has been redesigned to make finding and deploying connectors faster and more intuitive. Key improvements include a redesigned interface and a new search experience that delivers more precise results. To get started, visit the new [Confluent Hub](https://www.confluent.io/hub/?session_ref=direct&url_ref=https%3A%2F%2Fdocs.confluent.io%2Fcloud%2Fcurrent%2Frelease-notes%2Findex.html).
+</Update>
+
+<Update label="October 13, 2025">
+Confluent Cloud now supports Azure User Assigned Managed Identity (UAMI) for OAuth authentication. UAMI eliminates the need to manage static client IDs and secrets by leveraging Azure’s built-in identity management to automatically retrieve authentication tokens. This feature is available for Confluent Cloud and Confluent Platform 8.1 and later. For more information, see [Configure Azure User Assigned Managed Identity OAuth for Confluent Cloud](https://docs.confluent.io/cloud/current/security/authenticate/workload-identities/identity-providers/oauth/clients/uami.html#oauth-uami-share).
+</Update>
+
+<Update label="October 10, 2025">
+- The new table filtering and column mapping configuration properties, including `table.include.list`, `table.exclude.list`, `timestamp.columns.mapping`, and `incrementing.column.mapping` are now available in the following Confluent Cloud JDBC source connectors. The legacy properties, such as `timestamp.column.name` and `incrementing.column.name`, are now deprecated. Confluent recommends using the new column mapping properties for all new implementations.
+	- [Microsoft SQL Server Source (JDBC)](https://docs.confluent.io/cloud/current/connectors/cc-microsoft-sql-server-source.html#cc-microsoft-sql-server-source)
+	- [MySQL Source (JDBC)](https://docs.confluent.io/cloud/current/connectors/cc-mysql-source.html#cc-mysql-source)
+	- [Oracle Database Source (JDBC)](https://docs.confluent.io/cloud/current/connectors/cc-oracle-db-source.html#cc-oracle-db-source)
+	- [PostgreSQL Source (JDBC)](https://docs.confluent.io/cloud/current/connectors/cc-postgresql-source.html#cc-postgresql-source)
+</Update>
+
+<Update label="October 9, 2025">
+- Client-side field level encryption (CSFLE) now supports using multiple key vaults for high availability. You can configure multiple KEK registrations that reference the same encryption key material across regions or providers and implement client/proxy-driven failover if one key vault becomes unavailable. This feature supports cross-region disaster recovery scenarios and integration with on-premises Hardware Security Modules (HSMs) that distribute keys to multiple cloud key vaults. For more information, see the use of `encrypt.alternate.kms.key.ids` under `kmsProps` in [KEK Parameters](https://docs.confluent.io/cloud/current/security/encrypt/csfle/manage-keys.html#kek-parameters-csfle).
+- Partial success response for the `/export` endpoint on the Metrics API is available as a Limited Availability feature in Confluent Cloud. For more information, see [How does the Metrics API handle requests that include inaccessible resources?](https://docs.confluent.io/cloud/current/monitoring/monitor-faq.html#metrics-api-faq-error-handling-change).
+</Update>

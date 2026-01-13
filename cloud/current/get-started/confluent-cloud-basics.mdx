@@ -1,0 +1,86 @@
+---
+title: "Confluent Cloud Overview"
+sidebarTitle: "Overview"
+description: "Confluent Cloud provides Apache Kafka® as a cloud service, so that means you no longer need to install, upgrade or patch Kafka server components."
+---
+
+You also get access to a [cloud-native design](https://docs.confluent.io/cloud/current/_glossary.html#term-Kora), which offers [Infinite Storage](https://docs.confluent.io/cloud/current/_glossary.html#term-Infinite-Storage), [elastic scaling](https://docs.confluent.io/cloud/current/_glossary.html#term-Elastic-Confluent-Unit-for-Kafka-eCKU) and an uptime guarantee. If you’re coming to Confluent Cloud from open source Kafka, you can use data-streaming features only available from Confluent, including tools for monitoring and observability, an intuitive browser-based user interface, enterprise-grade security and data governance features.
+
+Confluent Cloud includes different types of server processes for streaming data in a production environment. In addition to [brokers](https://docs.confluent.io/cloud/current/_glossary.html#term-Kafka-broker) and [topics](https://docs.confluent.io/cloud/current/_glossary.html#term-topic), Confluent Cloud provides implementations of Kafka Connect, Schema Registry, and Confluent Cloud for Apache Flink®.
+
+<Info>
+**Ready to get started?**
+
+- Sign up for [Confluent Cloud](https://www.confluent.io/confluent-cloud/?session_ref=direct&url_ref=https%3A%2F%2Fdocs.confluent.io%2Fcloud%2Fcurrent%2Fget-started%2Fconfluent-cloud-basics.html), the fully managed cloud-native service for Apache Kafka and get started for free using the [Cloud quick start](https://docs.confluent.io/cloud/current/get-started/index.html).
+</Info>
+
+## Key features and industry advantages
+
+Confluent Cloud differentiates itself in the market through a set of unique and integrated features that simplify data streaming at scale.
+
+## Cloud-native architecture with Kora
+
+At the heart of Confluent Cloud is the Kora engine, a cloud-native re-architecture of Kafka. Unlike other managed services that simply run open-source Kafka on cloud infrastructure, Kora is designed to be elastic and cost-efficient.
+
+This architecture enables:
+
+- **Elastic Autoscaling**: The platform scales compute and storage independently and automatically, from zero to gigabytes per second (GBps) of throughput, ensuring your cluster always meets demand without over-provisioning.
+- **Performance and Latency**: It provides a highly performant service with consistently low tail latencies, ensuring reliable delivery of mission-critical data.
+- **Cost Efficiency**: With a pay-as-you-go model and serverless clusters, you only pay for the resources you consume, which can lead to significant cost savings compared to other alternatives that require you to manually size and manage capacity.
+
+## Complete integrated platform
+
+Confluent Cloud is a comprehensive platform that includes the entire ecosystem of tools needed for data streaming. This integrated approach saves you from having to build and manage a complex stack from various vendors.
+
+Fully-managed connectors
+
+A library of pre-built, fully-managed connectors simplifies data integration to and from popular databases, data lakes, and other services. This removes the operational overhead of running your own Kafka Connect clusters.
+
+Stream Processing
+
+- Confluent Cloud for Apache Flink provides a cloud-native, serverless service for Flink that enables simple, scalable, and secure stream processing that integrates seamlessly with Apache Kafka®. Your Kafka topics appear automatically as queryable Flink tables, with schemas and metadata attached by Confluent Cloud.
+- Confluent Cloud for Apache Flink supports creating stream-processing applications by using Flink SQL, the [Flink Table API](https://docs.confluent.io/cloud/current/flink/reference/table-api.html#flink-table-api) (Java and Python), and custom [user-defined functions](https://docs.confluent.io/cloud/current/flink/concepts/user-defined-functions.html#flink-sql-udfs).
+
+Stream Governance
+
+Built-in features like Schema Registry ensure data quality and compatibility across all your applications. This allows you to centrally manage schemas and prevent data errors at the source.
+
+## Enterprise-grade networking and security
+
+Confluent Cloud provides robust security and networking features that allow organizations to meet compliance and privacy requirements.
+
+Data Encryption
+
+All data is encrypted by default. Data in motion is secured using TLS 1.2, and data at rest is encrypted using native cloud provider services. For even greater control, customers can use Bring Your Own Key (BYOK) to encrypt data at rest with their own encryption keys, and Client-Side Field Level Encryption (CSFLE) to protect sensitive data at the application layer before it is written to Confluent Cloud.
+
+Private Networking
+
+To keep traffic off the public internet, Confluent Cloud offers multiple private networking options:
+
+- VPC/VNet Peering: A direct network connection between your cloud network and your Confluent Cloud clusters.
+- AWS PrivateLink, Azure Private Link, and Google Cloud Private Service Connect: These provide a more secure, one-way, and simpler alternative to peering, allowing your applications to connect to Confluent Cloud privately without exposing the IP space of your network.
+
+Identity and Access Management
+
+The platform provides a full suite of identity controls, including:
+
+- Role-Based Access Control (RBAC): Granular permissions for users and service accounts to ensure that only authorized entities can perform specific actions on resources.
+- Auditing: Comprehensive audit logs track all user and application activity, which is essential for security monitoring and compliance.
+
+## Operational simplicity and reliability
+
+Confluent Cloud is designed to offload a vast majority of the operational burden, which is a significant advantage over self-managed and even some partially-managed cloud offerings.
+
+- **Zero-downtime upgrades**: Confluent handles all software upgrades and patches automatically, ensuring your clusters are always running the latest, most secure version without any service disruption.
+- **99.99% uptime SLA**: Standard, Enterprise, Freight, and Dedicated clusters provides a strong Service Level Agreement (SLA) for core Kafka operations, giving you the confidence that your data streaming infrastructure is highly available and resilient.
+- **Expert Support**: As the original creators of Kafka, Confluent provides 24/7 expert support to help you solve complex Kafka issues, an expertise level that is unique in the industry.
+
+## Related content
+
+- For information about a free trial of Confluent Cloud, see: [Deploy Free Clusters on Confluent Cloud](https://docs.confluent.io/cloud/current/get-started/free-trial.html#free-trial)
+- For information on how to use Confluent Cloud, see: [Quick Start for Confluent Cloud](https://docs.confluent.io/cloud/current/get-started/index.html#cloud-quickstart)
+- For information on Confluent Cloud REST APIs, see: [Kafka REST API Quick Start for Confluent Cloud](https://docs.confluent.io/cloud/current/kafka-rest/krest-qs.html#cloud-rest-api-quickstart)
+- For information on Stream Governance, see: [Stream Governance on Confluent Cloud](https://docs.confluent.io/cloud/current/stream-governance/index.html#cloud-dg)
+- For information on networking, see: [Manage Networking on Confluent Cloud](https://docs.confluent.io/cloud/current/networking/overview.html#cloud-networking)
+- For information on Kafka cluster types on Confluent Cloud, see: [Kafka Cluster Types in Confluent Cloud](https://docs.confluent.io/cloud/current/clusters/cluster-types.html#cloud-cluster-types)
+- For information about migrating from open source Kafka to Confluent Cloud, see: [Migrating from Kafka services to Confluent](https://assets.confluent.io/m/2745775bbd1fa224/original/20240425-EB-Migrating_From_Kafka_To_Confluent.pdf?session_ref=direct&url_ref=https%3A%2F%2Fdocs.confluent.io%2Fcloud%2Fcurrent%2Fget-started%2Fconfluent-cloud-basics.html) PDF

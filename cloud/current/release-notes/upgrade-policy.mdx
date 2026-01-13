@@ -1,0 +1,92 @@
+---
+title: "Upgrade Policy for Confluent Cloud"
+sidebarTitle: "Upgrade Policy"
+description: "This section describes how changes to Confluent Cloud are managed for [Minor Upgrades for Confluent Cloud](https://docs.confluent.io/cloud/current/release-notes/#minor-ccloud-upgrade), [Major Upgrades for Confluent Cloud](https://docs.confluent.io/cloud/current/release-notes/#major-ccloud-upgrade), and [Deprecations for Confluent Cloud](https://docs.confluent.io/cloud/current/release-notes/#deprecation-ccloud-upgrade)."
+---
+
+## Minor Upgrades for Confluent Cloud
+
+Any change to Confluent Cloud services that isn’t a major upgrade or deprecation.
+
+**Potential customer impact**
+
+- Minimal: standard Kafka state changes that clients handle gracefully, for example leader elections.
+- None: totally transparent, depending on customer usage of the service.
+
+**Examples**
+
+- Kafka cluster roll.
+- Upgrading Kafka to a fully backwards-compatible version.
+- Adding new features.
+
+**Frequency**
+
+Very often, e.g., multiple times per day.
+
+**Communication before the change**
+
+Prior communication is done only when necessary. Communication may include email notifications, in-app messaging, updated documentation and release notes, and/or communication from Sales and customer operations.
+
+**Timing of the change for each customer**
+
+100% at Confluent’s discretion.
+
+## Major Upgrades for Confluent Cloud
+
+Any change to Confluent Cloud services that requires code changes to any customer applications (Kafka clients, API integrations, etc) to continue working as before.
+
+**Potential customer impact**
+
+- Large: could prevent use of service without code or configuration changes, or could problematically alter the performance profile.
+- None: totally transparent, depending on customer usage of the service.
+
+**Examples**
+
+- Upgrading Kafka to a version that is not fully backwards-compatible with the previous version.
+- Updating a public API from `api/v1/foo` to `api/v2/foo`.
+- Security update that materially changes cluster or client throughput.
+
+**Frequency**
+
+Rare (~1 per year)
+
+**Communication before the change**
+
+- Guaranteed: multiple email notifications to all registered Confluent Cloud users, starting at least 180 days before the upgrade date, with details about the change and available options.
+- May also include: in-app messaging; updated documentation and release notes; communication from Sales and customer support.
+
+**Timing of the change for each customer**
+
+May be coordinated with customers to avoid high-risk times and make the upgrade sooner, but the final date set by Confluent is not negotiable.
+
+## Deprecations for Confluent Cloud
+
+Any removal of customer-usable functionality from Confluent Cloud services.
+
+**Potential customer impact**
+
+- Large: could prevent use of service if the customer relies on the feature.
+- None: totally transparent, depending on customer usage of the service.
+
+**Examples**
+
+- Complete removal of a feature from the UI.
+- Shutting down `api/v1/foo`.
+- Removing a particular Connector as an option.
+
+**Frequency**
+
+Rare (~1 per year)
+
+**Communication before the change**
+
+- Guaranteed: multiple email notifications to all registered Confluent Cloud users, starting at least 180 days before the deprecation date, with details about the change and available alternatives.
+- May also include: in-app messaging; updated documentation and release notes; communication from Sales and customer support.
+
+**Timing of the change for each customer**
+
+100% at Confluent’s discretion.
+
+**Notes**
+
+Deprecations may be part of major upgrades (no guarantee of equivalent functionality in new versions).

@@ -1,0 +1,297 @@
+---
+title: "List of API Keys"
+api: "GET https://api.confluent.cloud/iam/v2/api-keys"
+contentType: "application/json"
+description: "Retrieve a sorted, filtered, paginated list of all API keys."
+---
+
+This can show all keys for a single owner (across resources - Kafka clusters), or all keys for a single resource (across owners). If no `owner` or `resource` filters are specified, returns all API Keys in the organization. You will only see the keys that are accessible to the account making the API request.
+
+<Accordion title="Authorizations">
+
+```
+cloud-api-key
+```
+
+<Icon icon="lock" /> **HTTP: cloud-api-key**
+Authenticate with Cloud API Keys using HTTP Basic Auth. Treat the Cloud API Key ID as the username and Cloud API Key Secret as the password.
+
+**HTTP Authorization Scheme**: `basic`
+</Accordion>
+
+## Query Parameters
+
+<ParamField path="spec.owner" type="string (SearchFilter)">
+  Filter the results by exact match for spec.owner.
+</ParamField>
+
+<ParamField path="spec.resource" type="string (SearchFilter)">
+  Filter the results by exact match for spec.resource.
+</ParamField>
+
+<ParamField path="page_size" type="integer" default="10">
+  A pagination size for collection requests.
+</ParamField>
+
+<ParamField path="page_token" type="string">
+  An opaque pagination token for collection requests.
+</ParamField>
+
+
+## Response
+
+<AccordionGroup>
+<Accordion title="200 OK">
+
+### Response Headers
+
+<ResponseField name="X-Request-Id" type="string">
+  The unique identifier for the API request.
+</ResponseField>
+
+<ResponseField name="X-RateLimit-Limit" type="integer">
+  The maximum number of requests you're permitted to make per time period.
+</ResponseField>
+
+<ResponseField name="X-RateLimit-Remaining" type="integer">
+  The number of requests remaining in the current rate limit window.
+</ResponseField>
+
+<ResponseField name="X-RateLimit-Reset" type="integer">
+  The relative time in seconds until the current rate-limit window resets. This differs from Github and Twitter's same-named header which uses UTC epoch seconds. We use relative time to avoid client/server time synchronization issues.
+</ResponseField>
+
+### Response Schema
+
+<ResponseField name="api_version" type="string" required default="iam/v2">
+  APIVersion defines the schema version of this representation of a resource.
+</ResponseField>
+
+<ResponseField name="kind" type="string" required default="ApiKeyList">
+  Kind defines the object this REST resource represents.
+</ResponseField>
+
+<ResponseField name="metadata" type="object" required>
+  ListMeta describes metadata that resource collections may have
+</ResponseField>
+
+<ResponseField name="data" type="Array of objects" required unique>
+  A data property that contains an array of resource items. Each entry in the array is a separate resource.
+</ResponseField>
+
+</Accordion>
+<Accordion title="400 Bad Request">
+
+### Response Headers
+
+<ResponseField name="X-Request-Id" type="string">
+  The unique identifier for the API request.
+</ResponseField>
+
+### Response Schema
+
+<ResponseField name="errors" type="Array of objects (Error)" required unique>
+  List of errors which caused this operation to fail
+</ResponseField>
+
+</Accordion>
+<Accordion title="401 Unauthorized">
+
+### Description
+
+The request lacks valid authentication credentials for this resource.
+
+### Response Headers
+
+<ResponseField name="X-Request-Id" type="string">
+  The unique identifier for the API request.
+</ResponseField>
+
+<ResponseField name="WWW-Authenticate" type="string">
+  Example: "Basic error=\"invalid_key\", error_description=\"The API Key is invalid\"". Indicates the authentication scheme and parameters applicable to the target resource.
+</ResponseField>
+
+### Response Schema
+
+<ResponseField name="errors" type="Array of objects (Error)" required unique>
+  List of errors which caused this operation to fail
+</ResponseField>
+
+</Accordion>
+<Accordion title="403 Forbidden">
+
+### Description
+
+The access credentials were considered insufficient to grant access.
+
+### Response Headers
+
+<ResponseField name="X-Request-Id" type="string">
+  The unique identifier for the API request.
+</ResponseField>
+
+### Response Schema
+
+<ResponseField name="errors" type="Array of objects (Error)" required unique>
+  List of errors which caused this operation to fail
+</ResponseField>
+
+</Accordion>
+<Accordion title="429 Rate Limit Exceeded">
+
+### Response Headers
+
+<ResponseField name="X-Request-Id" type="string">
+  The unique identifier for the API request.
+</ResponseField>
+
+<ResponseField name="X-RateLimit-Limit" type="integer">
+  The maximum number of requests you're permitted to make per time period.
+</ResponseField>
+
+<ResponseField name="X-RateLimit-Remaining" type="integer">
+  The number of requests remaining in the current rate limit window.
+</ResponseField>
+
+<ResponseField name="X-RateLimit-Reset" type="integer">
+  The relative time in seconds until the current rate-limit window resets. This differs from Github and Twitter's same-named header which uses UTC epoch seconds. We use relative time to avoid client/server time synchronization issues.
+</ResponseField>
+
+<ResponseField name="Retry-After" type="integer">
+  The number of seconds to wait until the rate limit window resets. Only sent when the rate limit is reached.
+</ResponseField>
+
+</Accordion>
+<Accordion title="500 Opps! Something went wrong.">
+
+### Response Headers
+
+<ResponseField name="X-Request-Id" type="string">
+  The unique identifier for the API request.
+</ResponseField>
+
+### Response Schema
+
+<ResponseField name="errors" type="Array of objects (Error)" required unique>
+  List of errors which caused this operation to fail
+</ResponseField>
+
+</Accordion>
+</AccordionGroup>
+
+<RequestExample>
+```curl
+curl --request GET \
+  --url 'https://api.confluent.cloud/iam/v2/api-keys?spec.owner=SOME_STRING_VALUE&spec.resource=SOME_STRING_VALUE' \
+  --header 'Authorization: Basic REPLACE_BASIC_AUTH'
+```
+</RequestExample>
+
+<ResponseExample>
+```json 200
+{
+  "api_version": "iam/v2",
+  "kind": "ApiKeyList",
+  "metadata": {
+    "first": "https://api.confluent.cloud/iam/v2/api-keys",
+    "last": "https://api.confluent.cloud/iam/v2/api-keys?page_token=bcAOehAY8F16YD84Z1wT",
+    "prev": "https://api.confluent.cloud/iam/v2/api-keys?page_token=YIXRY97wWYmwzrax4dld",
+    "next": "https://api.confluent.cloud/iam/v2/api-keys?page_token=UvmDWOB1iwfAIBPj6EYb",
+    "total_size": 123
+  },
+  "data": [
+    {
+      "api_version": "iam/v2",
+      "kind": "ApiKey",
+      "id": "dlz-f3a90de",
+      "metadata": {
+        "self": "https://api.confluent.cloud/iam/v2/api-keys/ak-12345",
+        "resource_name": "crn://confluent.cloud/organization=9bb441c4-edef-46ac-8a41-c49e44a3fd9a/api-key=ak-12345",
+        "created_at": "2006-01-02T15:04:05-07:00",
+        "updated_at": "2006-01-02T15:04:05-07:00",
+        "deleted_at": "2006-01-02T15:04:05-07:00"
+      },
+      "spec": {
+        "secret": "R15hoiDIq8Nxu/lY4mPO3DwAVIfU5W7OI+efsB607mLgHTnVW5XJGVqX2ysDx987",
+        "display_name": "CI kafka access key",
+        "description": "This API key provides kafka access to cluster x",
+        "owner": {
+          "id": "u-a83k9b",
+          "related": "https://api.confluent.cloud/iam/v2/users/u-a83k9b",
+          "resource_name": "https://api.confluent.cloud/user=u-a83k9b",
+          "api_version": "string",
+          "kind": "string"
+        },
+        "resource": {
+          "id": "lkc-c29js0",
+          "environment": "string",
+          "related": "https://api.confluent.cloud/cmk/v2/clusters/lkc-c29js0",
+          "resource_name": "https://api.confluent.cloud/organization=9bb441c4-edef-46ac-8a41-c49e44a3fd9a/environment=env-abc123/cloud-cluster=lkc-c29js0",
+          "api_version": "string",
+          "kind": "string"
+        }
+      }
+    }
+  ]
+}
+```
+
+```json 400
+{
+  "errors": [
+    {
+      "id": "ed42afdc-f0d5-4c0d-b428-9fc6ed6e279d",
+      "status": "400",
+      "code": "invalid_filter",
+      "title": "Invalid Filter",
+      "detail": "The 'delorean' resource can't be filtered by 'num_doors'",
+      "source": {
+        "parameter": "num_doors"
+      }
+    }
+  ]
+}
+```
+
+```json 401
+{
+  "errors": [
+    {
+      "id": "ed42afdc-f0d5-4c0d-b428-9fc6ed6e279d",
+      "status": "401",
+      "code": "user_unauthenticated",
+      "title": "Authentication Required",
+      "detail": "Valid authentication credentials must be provided"
+    }
+  ]
+}
+```
+
+```json 403
+{
+  "errors": [
+    {
+      "id": "ed42afdc-f0d5-4c0d-b428-9fc6ed6e279d",
+      "status": "403",
+      "code": "user_unauthorized",
+      "title": "User Access Unauthorized",
+      "detail": "The user 'mcfly' is not allowed to access the 'delorean' resource without the 'plutonium' role."
+    }
+  ]
+}
+```
+
+```json 500
+{
+  "errors": [
+    {
+      "id": "ed42afdc-f0d5-4c0d-b428-9fc6ed6e279d",
+      "status": "500",
+      "code": "out_of_gas",
+      "title": "DeLorean Out Of Gas",
+      "detail": "The DeLorean has run out of gas, but Doc Brown will fill 'er up for you asap"
+    }
+  ]
+}
+```
+</ResponseExample>

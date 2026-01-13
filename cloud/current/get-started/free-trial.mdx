@@ -1,0 +1,55 @@
+---
+title: "Deploy Free Clusters on Confluent Cloud"
+sidebarTitle: "Deploy Free Clusters"
+description: "Confluent Cloud enables you to sign up and use the product with a temporary free trial, which allows you to test and evaluate the platform. To use the Confluent Cloud free trial, [sign up for Confluent Cloud](https://www.confluent.io/get-started/?session_ref=direct&url_ref=https%3A%2F%2Fdocs.confluent.io%2Fcloud%2Fcurrent%2Fget-started%2Ffree-trial.html)."
+---
+
+## Use the free trial
+
+When you sign up for Confluent Cloud, your [organization](https://docs.confluent.io/cloud/current/security/access-control/hierarchy/organizations/cloud-organization.html#cloud-organization) will have free credit automatically added to your billing account. This free credit expires after 30 days. When you have consumed your free credit, or the credit expires without being used, the free trial is over.
+
+After the free trial is over, your organization will be suspended. While your organization is suspended, you will be unable to use any Confluent Cloud features, and your data will be inaccessible. To reactivate a suspended organization at the end of the free trial, log in to the Confluent Cloud Console and enter a payment method, or claim a Promo Code for additional free credit.
+
+If you do not enter a credit card or claim a Promo Code within 30 days of suspension, we delete your resources but preserve your organization and users. To reactivate an account after the 30-day suspension period, log in to the Confluent Cloud Console and enter a payment method.
+
+<Warning>
+**Important**
+
+If you use a Promo Code to reactivate your organization, but you do not enter a payment method before the free credit from the Promo Code is consumed or expires, your organization will be suspended again, which could result in disruption or data loss.
+</Warning>
+
+For more information regarding Promo Codes and payment methods, see [Redeem a promo code or view balance](https://docs.confluent.io/cloud/current/billing/overview.html#promo-codes) and [Manage your payment method](https://docs.confluent.io/cloud/current/billing/overview.html#add-a-card).
+
+## View your free credit balance
+
+To view your free credit balance and time remaining until your free credit expires, navigate to the [Payment details & contacts](https://confluent.cloud/settings/billing/payment?session_ref=direct&url_ref=https%3A%2F%2Fdocs.confluent.io%2Fcloud%2Fcurrent%2Fget-started%2Ffree-trial.html) tab on the **Billing & payment** page in the Confluent Cloud Console .
+
+## Free trial notifications
+
+During your free trial, you will receive several email notifications from Confluent providing helpful information about the status of your free trial. Free trial emails are sent to the user who originally signed up for Confluent Cloud.
+
+Emails are sent based on the following events during the free trial:
+
+- The free trial credit is 50% consumed.
+- 50% of the free trial credit expiration period has elapsed.
+- The free trial credit is 80% consumed OR free trial credit expires in less than 3 days.
+- The organization is suspended because the free trial has ended.
+
+The following exceptions apply to free trial emails:
+
+- If you enter a [payment method](https://docs.confluent.io/cloud/current/get-started/#add-a-card-free-trial) before the end of your free trial, you will be opted out of subsequent email notifications specific to the free trial.
+- If you [redeem a promo code](https://docs.confluent.io/cloud/current/billing/overview.html#promo-codes) before the end of your free trial, you will be opted out of most email notifications specific to the free trial, and instead you will receive email notifications when:
+	- One promo code remains that is 80% consumed OR expires in less than 3 days.
+	- The organization is suspended because the free trial has ended.
+
+## Estimate costs
+
+Confluent provides a cost-estimation tool that provides you with an estimate of your costs. The tool allows you to specify your requirement for throughput, retention, and other cost-related factors and then generates an estimate. To get an estimate, see [Confluent Cost Estimator](https://www.confluent.io/pricing/cost-estimator/?session_ref=direct&url_ref=https%3A%2F%2Fdocs.confluent.io%2Fcloud%2Fcurrent%2Fget-started%2Ffree-trial.html).
+
+## Add payment methods
+
+During the free trial, you can add a payment method by navigating to the [Billing & Payment screen](https://confluent.cloud/settings/billing/payment/edit-card?session_ref=direct&url_ref=https%3A%2F%2Fdocs.confluent.io%2Fcloud%2Fcurrent%2Fget-started%2Ffree-trial.html) in the Confluent Cloud Console. To avoid disruption and prevent possible data loss, you should enter a payment method before the end of your free trial. For more information, see [Manage your payment method](https://docs.confluent.io/cloud/current/billing/overview.html#add-a-card).
+
+Any free credit that you have will remain in your Organization and be consumed before billing accrues. After the free credit is consumed, your consumption will accrue and you will be charged at the end of each monthly billing cycle.
+
+To enter a payment method or claim a Promo Code, your user account must be assigned the [OrganizationAdmin](https://docs.confluent.io/cloud/current/security/access-control/rbac/predefined-rbac-roles.html#organizationadmin-role) role. For more information, see [Role-based Access Control (RBAC) on Confluent Cloud](https://docs.confluent.io/cloud/current/security/access-control/rbac/overview.html#cloud-rbac).
