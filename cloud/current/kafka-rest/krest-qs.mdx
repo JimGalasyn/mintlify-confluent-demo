@@ -1,13 +1,13 @@
 ---
 title: "Kafka REST API Quick Start for Confluent Cloud"
-sidebarTitle: REST API Quick Start
-description: Apache Kafka® REST APIs, listed in the API reference under [KAFKA API (V3)](https://docs.confluent.io/cloud/current/api.html#tag/Cluster-\(v3\)), are a subset of the [Confluent Cloud REST APIs](https://docs.confluent.io/cloud/current/api.html#section/Introduction) available as core building blocks of Confluent Cloud. You can use the APIs to manage your own account or to integrate Confluent into your product.
+sidebarTitle: "REST API Quick Start"
+description: "Apache Kafka® REST APIs, listed in the API reference under [KAFKA API (V3)](https://docs.confluent.io/cloud/current/api.html#tag/Cluster-\(v3\)), are a subset of the [Confluent Cloud REST APIs](https://docs.confluent.io/cloud/current/api.html#section/Introduction) available as core building blocks of Confluent Cloud. You can use the APIs to manage your own account or to integrate Confluent into your product."
 ---
 
 <Info>
-**Get Started for Free**
+  **Get Started for Free**
 
-[Sign up for a Confluent Cloud trial](https://www.confluent.io/get-started/?session_ref=direct&url_ref=https%3A%2F%2Fdocs.confluent.io%2Fcloud%2Fcurrent%2Fkafka-rest%2Fkrest-qs.html) and get $400 of free credit.
+  [Sign up for a Confluent Cloud trial](https://www.confluent.io/get-started/?session_ref=direct&url_ref=https%3A%2F%2Fdocs.confluent.io%2Fcloud%2Fcurrent%2Fkafka-rest%2Fkrest-qs.html) and get \$400 of free credit.
 </Info>
 
 The Kafka REST API is a set of cloud-native APIs for administering and using your Kafka clusters. The API endpoint is available by default for all [cluster types](https://docs.confluent.io/cloud/current/clusters/cluster-types.html#cloud-cluster-types) and can be accessed via the Confluent Cloud Console.
@@ -15,9 +15,9 @@ The Kafka REST API is a set of cloud-native APIs for administering and using you
 This quick start gets you up and running with administering your Apache Kafka® cluster using the [Confluent Cloud REST APIs](https://docs.confluent.io/cloud/current/api.html#tag/Cluster-\(v3\)).
 
 <Info>
-**Note**
+  **Note**
 
-Currently, these APIs support only BINARY, JSON and STRING. Therefore, the APIs do not currently support using [Schema Registry](https://docs.confluent.io/cloud/current/sr/schemas-manage.html#sr-prv) for validation of produced messages against the [supported schema formats](https://docs.confluent.io/platform/current/schema-registry/serdes-develop/index.html).
+  Currently, these APIs support only BINARY, JSON and STRING. Therefore, the APIs do not currently support using [Schema Registry](https://docs.confluent.io/cloud/current/sr/schemas-manage.html#sr-prv) for validation of produced messages against the [supported schema formats](https://docs.confluent.io/platform/current/schema-registry/serdes-develop/index.html).
 </Info>
 
 ## What the Quick Start Covers
@@ -45,148 +45,139 @@ You can use an existing cluster or create a new one, as described in [step 1 of 
 The Quick Start shows how to use [curl](https://curl.haxx.se/?session_ref=direct&url_ref=https%3A%2F%2Fdocs.confluent.io%2Fcloud%2Fcurrent%2Fkafka-rest%2Fkrest-qs.html) commands to test API calls.
 
 - For your API testing, you may want to use the `--silent` flag with `curl` and pipe the entire command through [jq](https://stedolan.github.io/jq/?session_ref=direct&url_ref=https%3A%2F%2Fdocs.confluent.io%2Fcloud%2Fcurrent%2Fkafka-rest%2Fkrest-qs.html) to get nicely formatted output. For example:
-	
-    ```bash
-    curl --silent -H "Authorization: Basic <BASE64-encoded-key-and-secret>" \
-	--request GET --url 'https://<REST-endpoint>/kafka/v3/clusters/<cluster-id>/topics/<topic-name>/configs' | jq
-    ```
-    
-	Output for commands in this quick start is shown as formatted, but you have to use `curl --silent` and `|jq` to get this, and those are not included in most of the example commands so as not to confuse this nice-to-have formatting with the core commands.
+
+  ```bash
+  curl --silent -H "Authorization: Basic <BASE64-encoded-key-and-secret>" \
+  --request GET --url 'https://<REST-endpoint>/kafka/v3/clusters/<cluster-id>/topics/<topic-name>/configs' | jq
+  ```
+
+  Output for commands in this quick start is shown as formatted, but you have to use `curl --silent` and `|jq` to get this, and those are not included in most of the example commands so as not to confuse this nice-to-have formatting with the core commands.
 - To send output to a file and also view it on-screen, use `<command> | tee notes.txt` to create a new file or overwrite a same-named file. Thereafter, use the `tee` command with the `-a` flag if you want to append to an existing file; for example, `<command> | tee -a notes.txt`. You can chain this after the `jq` pipe.
 
 <Tip>
-**Tip**
+  **Tip**
 
-Some of the examples use backslashes (`\`) to add returns to multi-line commands. Backslashes enable you to type a single command on multiple lines in your shell or terminal. Also, they are used here to optimize the display for the documentation. However, if you -paste examples with backslashes, you may not be able to arrow back up through the command to change values to match your deployment. This will depend on the type of shell you are using, and the settings for it.
+  Some of the examples use backslashes (`\`) to add returns to multi-line commands. Backslashes enable you to type a single command on multiple lines in your shell or terminal. Also, they are used here to optimize the display for the documentation. However, if you -paste examples with backslashes, you may not be able to arrow back up through the command to change values to match your deployment. This will depend on the type of shell you are using, and the settings for it.
 </Tip>
 
 ## Step 1: Find the REST endpoint address and cluster ID
 
 <Steps>
-<Step>
+  <Step>
     Get the REST endpoint and cluster ID from the Confluent CLI or the Cloud Console UI:
-	<Tabs>
-        <Tab title="CLI">
-            <Steps>
-                <Step>
-                    Log on to the Confluent CLI with `confluent login`.
-                </Step>
-                <Step>
-                    Make sure you are viewing the environment you want with `confluent environment list`, `confluent environment use`.
-                </Step>
-                <Step>
-                    List the clusters to get the IDs with the command `confluent kafka cluster list`.
-                </Step>
-                <Step>
-                    Enter this command to get cluster details:
-                </Step>
-                <Step>
-                    ```bash
-                    confluent kafka cluster describe <cluster-id>
-                    ```
-                </Step>
-            </Steps>
 
-            <Tip>
-            **Tip**
-
-            See [CLI installation guide](https://docs.confluent.io/confluent-cli/current/install.html) for information on installing or updating the CLI.
-            </Tip>
-        </Tab>
-        <Tab title="Cloud Console">
+    <Tabs>
+      <Tab title="CLI">
         <Steps>
-            <Step>
-                Sign in to the [Confluent Cloud Console](https://confluent.cloud/login?session_ref=direct&url_ref=https%3A%2F%2Fdocs.confluent.io%2Fcloud%2Fcurrent%2Fkafka-rest%2Fkrest-qs.html).
-            </Step>
-            <Step>
-                Navigate to the cluster you want to use, and click **Cluster settings**.
-                <Frame>
-                [![../_images/rest-api-qs-endpoint-on-ui.png](https://docs.confluent.io/cloud/current/_images/rest-api-qs-endpoint-on-ui.png)](https://docs.confluent.io/cloud/current/_images/rest-api-qs-endpoint-on-ui.png)
-                </Frame>
-            </Step>
+          <Step>
+            Log on to the Confluent CLI with `confluent login`.
+          </Step>
+          <Step>
+            Make sure you are viewing the environment you want with `confluent environment list`, `confluent environment use`.
+          </Step>
+          <Step>
+            List the clusters to get the IDs with the command `confluent kafka cluster list`.
+          </Step>
+          <Step>
+            Enter this command to get cluster details:
+          </Step>
+          <Step>
+            ```bash
+            confluent kafka cluster describe <cluster-id>
+            ```
+          </Step>
         </Steps>
-        </Tab>
+        <Tip>
+          **Tip**
+
+          See [CLI installation guide](https://docs.confluent.io/confluent-cli/current/install.html) for information on installing or updating the CLI.
+        </Tip>
+      </Tab>
+      <Tab title="Cloud Console">
+        <Steps>
+          <Step>
+            Sign in to the [Confluent Cloud Console](https://confluent.cloud/login?session_ref=direct&url_ref=https%3A%2F%2Fdocs.confluent.io%2Fcloud%2Fcurrent%2Fkafka-rest%2Fkrest-qs.html).
+          </Step>
+          <Step>
+            Navigate to the cluster you want to use, and click **Cluster settings**.
+
+            <Frame>
+              
+            </Frame>
+          </Step>
+        </Steps>
+      </Tab>
     </Tabs>
-</Step>
-<Step title="Note the REST endpoint">
+  </Step>
+  <Step title="Note the REST endpoint">
     This is the server where the REST APIs are hosted. Use this endpoint ID in place of the example server in the examples below.
-</Step>
-<Step title="Note the cluster ID">
+  </Step>
+  <Step title="Note the cluster ID">
     This is the ID of the Kafka cluster that will be administered using the REST API and should be used in place of the example cluster ID in the examples below.
-</Step>
+  </Step>
 </Steps>
 
 ## Step 2: Create credentials to access the Kafka cluster resources
 
 <Steps>
-<Step>
-Create a Confluent Cloud cluster-scoped API key and secret.
-	To communicate with the REST API, you need a Confluent Cloud API key and API secret. You can generate an API key pair by using the CLI or Cloud Console.
-    <Tabs>
-        <Tab title="CLI">
-        <Steps>
-            <Step>
-            If you have not done so already, log on to the Confluent CLI with `confluent login`.
-            </Step>
-            <Step>
-            Run the following command to create the API key and secret for the cluster.
-                
-                ```bash
-                confluent api-key create --resource <cluster-id> --description <key-description>
-                ```
-                
-                Your output should resemble:
-                It may take a couple of minutes for the API key to be ready.
-                Save the API key and secret. The secret is not retrievable later.
-                +---------+------------------------------------------------------------------+
-                | API Key | 1234WXYZ4321ZYXW                                                 |
-                | Secret  | 1aBcDEFG234Hy7CeGBoBDoBBsSttOMJ5oFUwwkhj7g7MlS3p01c99C6ao84pQb8X |
-                +---------+------------------------------------------------------------------+
-            </Step>
-        </Steps>
-        </Tab>
+  <Step>
+    Create a Confluent Cloud cluster-scoped API key and secret. To communicate with the REST API, you need a Confluent Cloud API key and API secret. You can generate an API key pair by using the CLI or Cloud Console.
 
-        <Tab title="Cloud Console">
+    <Tabs>
+      <Tab title="CLI">
         <Steps>
-            <Step>
-                In [Confluent Cloud Console](https://confluent.cloud/login?session_ref=direct&url_ref=https%3A%2F%2Fdocs.confluent.io%2Fcloud%2Fcurrent%2Fkafka-rest%2Fkrest-qs.html), navigate to the cluster you want to use, and from the left menu, select **Cluster Overview -> API Keys**.
-            </Step>
-            <Step>
-                Click **Create key** and follow the prompts to create a Global access API key.
-                <Frame>
-                [![Confluent Cloud API keys](https://docs.confluent.io/cloud/current/_images/rest-qs-cloud-api-keys-on-cluster-ui.png)](https://docs.confluent.io/cloud/current/_images/rest-qs-cloud-api-keys-on-cluster-ui.png)
-                </Frame>
-            </Step>
+          <Step>
+            If you have not done so already, log on to the Confluent CLI with `confluent login`.
+          </Step>
+          <Step>
+            Run the following command to create the API key and secret for the cluster.
+
+            ```bash
+            confluent api-key create --resource <cluster-id> --description <key-description>
+            ```
+
+            Your output should resemble: It may take a couple of minutes for the API key to be ready. Save the API key and secret. The secret is not retrievable later. +---------+------------------------------------------------------------------+ | API Key | 1234WXYZ4321ZYXW                                                 | | Secret  | 1aBcDEFG234Hy7CeGBoBDoBBsSttOMJ5oFUwwkhj7g7MlS3p01c99C6ao84pQb8X | +---------+------------------------------------------------------------------+
+          </Step>
         </Steps>
-        </Tab>
+      </Tab>
+      <Tab title="Cloud Console">
+        <Steps>
+          <Step>
+            In [Confluent Cloud Console](https://confluent.cloud/login?session_ref=direct&url_ref=https%3A%2F%2Fdocs.confluent.io%2Fcloud%2Fcurrent%2Fkafka-rest%2Fkrest-qs.html), navigate to the cluster you want to use, and from the left menu, select **Cluster Overview -\> API Keys**.
+          </Step>
+          <Step>
+            Click **Create key** and follow the prompts to create a Global access API key.
+
+            <Frame>
+              
+            </Frame>
+          </Step>
+        </Steps>
+      </Tab>
     </Tabs>
-	For more information, see [Use API Keys to Authenticate to Confluent Cloud](https://docs.confluent.io/cloud/current/security/authenticate/workload-identities/service-accounts/api-keys/overview.html#cloud-api-keys).
-</Step>
-<Step>
-    Use the API key ID and corresponding secret to create the base64 encoded string used in the authorization header that will be included in the REST calls to the Confluent Cloud API.
-    To learn more, see [Authentication](https://docs.confluent.io/cloud/current/api.html#section/Object-Model) in the API documentation, which describes Cloud and Cluster API keys and base64 encoding.
-    For example, to generate a base64 header from an API key on Mac OS:
-    
+    For more information, see [Use API Keys to Authenticate to Confluent Cloud](https://docs.confluent.io/cloud/current/security/authenticate/workload-identities/service-accounts/api-keys/overview.html#cloud-api-keys).
+  </Step>
+  <Step>
+    Use the API key ID and corresponding secret to create the base64 encoded string used in the authorization header that will be included in the REST calls to the Confluent Cloud API. To learn more, see [Authentication](https://docs.confluent.io/cloud/current/api.html#section/Object-Model) in the API documentation, which describes Cloud and Cluster API keys and base64 encoding. For example, to generate a base64 header from an API key on Mac OS:
+
     ```bash
     echo -n "<api-key>:<api-secret>" | base64
     ```
-    
+
     Your output from the above command will be a long alphanumeric string: the base64 encoded key and secret, which you will use as basic authorization in the REST API calls that follow. Save this so that you can use it in the next steps.
-</Step>
-<Step>
-    (Optional) Store the base64 encoded key and secret in an environment variable for use in commands.
-    To make rest of the steps in this quick start more efficient, you can optionally store the base64 encoded key and secret in an environment variable, then use the variable in subsequent commands. For example, to store the encoded key and secret in a variable called `MYKEY`:
-    
+  </Step>
+  <Step>
+    (Optional) Store the base64 encoded key and secret in an environment variable for use in commands. To make rest of the steps in this quick start more efficient, you can optionally store the base64 encoded key and secret in an environment variable, then use the variable in subsequent commands. For example, to store the encoded key and secret in a variable called `MYKEY`:
+
     ```bash
     MYKEY=<alphanumeric string of your base64 encoded API key and secret>
     ```
-    
-    You can check the contents of the variable with `echo $MYKEY`.
-    
-    Then, use it for authorization in subsequent commands: `"Authorization: Basic $MYKEY"`.
-</Step>
-</Steps>
 
+    You can check the contents of the variable with `echo $MYKEY`.
+
+    Then, use it for authorization in subsequent commands: `"Authorization: Basic $MYKEY"`.
+  </Step>
+</Steps>
 
 ## Step 3: List the topics already available on the Kafka cluster
 
@@ -227,7 +218,6 @@ curl -H "Authorization: Basic <BASE64-encoded-key-and-secret>" -H 'Content-Type:
 -d '{"topic_name": "<topic-name>", "partitions_count": <Partitions count>, "replication_factor": <Replication factor>}'
 ```
 
-
 For example:
 
 ```bash
@@ -235,7 +225,6 @@ curl -H "Authorization: Basic ABC123ABC" -H 'Content-Type: application/json' \
 --request POST --url 'https://pkc-abcde.us-west4.gcp.confluent.cloud:443/kafka/v3/clusters/lkc-vo9pz/topics' \
 -d '{"topic_name": "testTopic1", "partitions_count": 5, "replication_factor": 3}'
 ```
-
 
 The response gives information about the new topic:
 
@@ -266,152 +255,148 @@ The response gives information about the new topic:
 ## Step 5: Administer topic configurations
 
 <Steps>
-<Step>
-View the default configuration for the topic created in [Step 4](https://docs.confluent.io/cloud/current/kafka-rest/#rest-api-qs-create-topic).
-	You can get the full list of topic configuration properties with this API call:
-	
+  <Step>
+    View the default configuration for the topic created in [Step 4](https://docs.confluent.io/cloud/current/kafka-rest/#rest-api-qs-create-topic). You can get the full list of topic configuration properties with this API call:
+
     ```bash
     curl -H "Authorization: Basic <BASE64-encoded-key-and-secret>" \
-	--request GET --url 'https://<REST-endpoint>/kafka/v3/clusters/<cluster-id>/topics/<topic-name>/configs'
+    --request GET --url 'https://<REST-endpoint>/kafka/v3/clusters/<cluster-id>/topics/<topic-name>/configs'
     ```
-	
+
     For example, the following command gets the full list of configurations for `testTopic1`, pipes it through [jq](https://stedolan.github.io/jq/?session_ref=direct&url_ref=https%3A%2F%2Fdocs.confluent.io%2Fcloud%2Fcurrent%2Fkafka-rest%2Fkrest-qs.html) for more readable output, and uses `tee` to send the output to a new file (called `testTopic1-configs.txt`) and simultaneously display it on-screen. Sending the output to a file will enable you to browse and search all the original configs, which might be tangentially useful for the next steps.
-	
+
     ```bash
     curl --silent -H "Authorization: Basic ABC123ABC" \
-	--request GET --url 'https://pkc-abcde.us-west4.gcp.confluent.cloud:443/kafka/v3/clusters/lkc-vo9pz/topics/testTopic1/configs'  | jq | tee testTopic1-configs.txt
+    --request GET --url 'https://pkc-abcde.us-west4.gcp.confluent.cloud:443/kafka/v3/clusters/lkc-vo9pz/topics/testTopic1/configs'  | jq | tee testTopic1-configs.txt
     ```
 
-	The response shows a list of topic configuration properties and the values these are set to:
+    The response shows a list of topic configuration properties and the values these are set to:
+
     ```json expandable
-	{
-	  "kind": "KafkaTopicConfigList",
-	  "metadata": {
-	    "self": "https://pkc-abcde.us-west4.gcp.confluent.cloud:443/kafka/v3/clusters/lkc-vo9pz/topics/testTopic1/configs",
-	    "next": null
-	  },
-	  "data": [
-	    {
-	      "kind": "KafkaTopicConfig",
-	      "metadata": {
-	        "self": "https://pkc-abcde.us-west4.gcp.confluent.cloud:443/kafka/v3/clusters/lkc-vo9pz/topics/testTopic1/configs/cleanup.policy",
-	        "resource\_name": "crn:///kafka=lkc-vo9pz/topic=testTopic1/config=cleanup.policy"
-	      },
-	      "cluster\_id": "lkc-vo9pz",
-	      "name": "cleanup.policy",
-	      "value": "delete",
-	      "is\_read\_only": false,
-	      "is\_sensitive": false,
-	      "source": "DYNAMIC\_TOPIC\_CONFIG",
-	      "synonyms": [
-	        {
-	          "name": "cleanup.policy",
-	          "value": "delete",
-	          "source": "DYNAMIC\_TOPIC\_CONFIG"
-	        },
-	        {
-	          "name": "log.cleanup.policy",
-	          "value": "delete",
-	          "source": "DEFAULT\_CONFIG"
-	        }
-	      \],
-	      "topic\_name": "testTopic1",
-	      "is\_default": false
-	    },
-	    ...
+    {
+      "kind": "KafkaTopicConfigList",
+      "metadata": {
+        "self": "https://pkc-abcde.us-west4.gcp.confluent.cloud:443/kafka/v3/clusters/lkc-vo9pz/topics/testTopic1/configs",
+        "next": null
+      },
+      "data": [
+        {
+          "kind": "KafkaTopicConfig",
+          "metadata": {
+            "self": "https://pkc-abcde.us-west4.gcp.confluent.cloud:443/kafka/v3/clusters/lkc-vo9pz/topics/testTopic1/configs/cleanup.policy",
+            "resource\_name": "crn:///kafka=lkc-vo9pz/topic=testTopic1/config=cleanup.policy"
+          },
+          "cluster\_id": "lkc-vo9pz",
+          "name": "cleanup.policy",
+          "value": "delete",
+          "is\_read\_only": false,
+          "is\_sensitive": false,
+          "source": "DYNAMIC\_TOPIC\_CONFIG",
+          "synonyms": [
+            {
+              "name": "cleanup.policy",
+              "value": "delete",
+              "source": "DYNAMIC\_TOPIC\_CONFIG"
+            },
+            {
+              "name": "log.cleanup.policy",
+              "value": "delete",
+              "source": "DEFAULT\_CONFIG"
+            }
+          \],
+          "topic\_name": "testTopic1",
+          "is\_default": false
+        },
+        ...
     ```
-</Step>
-<Step>
-Edit the topic configuration.
-	You can find a full list of configuration properties in the [Topic Configurations](https://docs.confluent.io/platform/current/installation/configuration/topic-configs.html) reference in the Confluent Platform documentation.
-	To edit the topic properties, add the property name to the end of the URL:
-	
+  </Step>
+  <Step>
+    Edit the topic configuration. You can find a full list of configuration properties in the [Topic Configurations](https://docs.confluent.io/platform/current/installation/configuration/topic-configs.html) reference in the Confluent Platform documentation. To edit the topic properties, add the property name to the end of the URL:
+
     ```bash
     curl -H "Authorization: Basic <BASE64-encoded-key-and-secret>" -H 'Content-Type: application/json' \
-	--request PUT  --url 'https://<REST-endpoint>/kafka/v3/clusters/<cluster-id>/topics/<topic-name>/configs/<property-name>' \
-	-d '{"value": "<New value>"}'
-    ```
-	
-	For example, to change the value of [retention.ms](https://docs.confluent.io/platform/current/installation/configuration/topic-configs.html#topicconfigs_retention.ms), from its default value of 604800000 (7 days) to 259200000 (3 days):
-	
-    ```bash
-    curl -H "Authorization: Basic ABC123ABC" -H 'Content-Type: application/json' --request PUT  \
-	--url 'https://pkc-abcde.us-west4.gcp.confluent.cloud:443/kafka/v3/clusters/lkc-vo9pz/topics/testTopic1/configs/retention.ms' \
-	-d '{"value": "259200000"}'
+    --request PUT  --url 'https://<REST-endpoint>/kafka/v3/clusters/<cluster-id>/topics/<topic-name>/configs/<property-name>' \
+    -d '{"value": "<New value>"}'
     ```
 
-	No response payload is returned for this call.
-</Step>
-<Step>
-View the updated topic configuration.
-	To view the value for a single property, specify the property name in the URL:
+    For example, to change the value of [retention.ms](https://docs.confluent.io/platform/current/installation/configuration/topic-configs.html#topicconfigs_retention.ms), from its default value of 604800000 (7 days) to 259200000 (3 days):
+
+    ```bash
+    curl -H "Authorization: Basic ABC123ABC" -H 'Content-Type: application/json' --request PUT  \
+    --url 'https://pkc-abcde.us-west4.gcp.confluent.cloud:443/kafka/v3/clusters/lkc-vo9pz/topics/testTopic1/configs/retention.ms' \
+    -d '{"value": "259200000"}'
+    ```
+
+    No response payload is returned for this call.
+  </Step>
+  <Step>
+    View the updated topic configuration. To view the value for a single property, specify the property name in the URL:
 
     ```bash
     curl -H "Authorization: Basic <BASE64-encoded-key-and-secret>" --request GET --url 'https://<REST-endpoint>/kafka/v3/clusters/<cluster-id>/topics/<topic-name>/configs/<property-name>’
     ```
-	
-	For example:
+
+    For example:
 
     ```bash
     curl -H "Authorization: Basic ABC123ABC" --request GET --url 'https://pkc-abcde.us-west4.gcp.confluent.cloud:443/kafka/v3/clusters/lkc-vo9pz/topics/testTopic1/configs/retention.ms'
     ```
-	
-	The response payload shows the current value of the topic configuration property `retention.ms`:
+
+    The response payload shows the current value of the topic configuration property `retention.ms`:
+
     ```json expandable
-	{
-	  "kind": "KafkaTopicConfig",
-	  "metadata": {
-	    "self": "https://pkc-abcde.us-west4.gcp.confluent.cloud:443/kafka/v3/clusters/lkc-vo9pz/topics/testTopic1/configs/retention.ms",
-	    "resource\_name": "crn:///kafka=lkc-vo9pz/topic=testTopic1/config=retention.ms"
-	  },
-	  "cluster\_id": "lkc-vo9pz",
-	  "name": "retention.ms",
-	  "value": "259200000",
-	  "is\_read\_only": false,
-	  "is\_sensitive": false,
-	  "source": "DYNAMIC\_TOPIC\_CONFIG",
-	  "synonyms": [
-	    {
-	      "name": "retention.ms",
-	      "value": "259200000",
-	      "source": "DYNAMIC\_TOPIC\_CONFIG"
-	    }
-	  \],
-	  "topic\_name": "testTopic1",
-	  "is\_default": false
-	}
+    {
+      "kind": "KafkaTopicConfig",
+      "metadata": {
+        "self": "https://pkc-abcde.us-west4.gcp.confluent.cloud:443/kafka/v3/clusters/lkc-vo9pz/topics/testTopic1/configs/retention.ms",
+        "resource\_name": "crn:///kafka=lkc-vo9pz/topic=testTopic1/config=retention.ms"
+      },
+      "cluster\_id": "lkc-vo9pz",
+      "name": "retention.ms",
+      "value": "259200000",
+      "is\_read\_only": false,
+      "is\_sensitive": false,
+      "source": "DYNAMIC\_TOPIC\_CONFIG",
+      "synonyms": [
+        {
+          "name": "retention.ms",
+          "value": "259200000",
+          "source": "DYNAMIC\_TOPIC\_CONFIG"
+        }
+      \],
+      "topic\_name": "testTopic1",
+      "is\_default": false
+    }
     ```
-</Step>
-<Step>
-Batch update topic configurations.
-	To update multiple configuration properties with a single REST call, use a batch update:
-	
+  </Step>
+  <Step>
+    Batch update topic configurations. To update multiple configuration properties with a single REST call, use a batch update:
+
     ```bash
     curl -H "Authorization: Basic <BASE64-encoded-key-and-secret>" -H 'Content-Type: application/json' \
-	--request POST  --url 'https://<REST-endpoint>/kafka/v3/clusters/<cluster-id>/topics/<topic-name>/configs:alter' \
-	-d '{"data": [{"name": "<property-name>", "value": "<new-value>"}, {"name": "<property-name>", "value": "<new-value>"}]}'
+    --request POST  --url 'https://<REST-endpoint>/kafka/v3/clusters/<cluster-id>/topics/<topic-name>/configs:alter' \
+    -d '{"data": [{"name": "<property-name>", "value": "<new-value>"}, {"name": "<property-name>", "value": "<new-value>"}]}'
     ```
 
-	For example, this API call updates [retention.ms](https://docs.confluent.io/platform/current/installation/configuration/topic-configs.html#topicconfigs_retention.ms) again, this time to 172800000 (2 days) and [segment.bytes](https://docs.confluent.io/platform/current/installation/configuration/topic-configs.html#topicconfigs_segment.bytes) from its default (1073741824) to 123456789:
-	
+    For example, this API call updates [retention.ms](https://docs.confluent.io/platform/current/installation/configuration/topic-configs.html#topicconfigs_retention.ms) again, this time to 172800000 (2 days) and [segment.bytes](https://docs.confluent.io/platform/current/installation/configuration/topic-configs.html#topicconfigs_segment.bytes) from its default (1073741824) to 123456789:
+
     ```bash
     curl -H "Authorization: Basic ABC123ABC" -H 'Content-Type: application/json' --request POST  --url 'https://pkc-abcde.us-west4.gcp.confluent.cloud:443/kafka/v3/clusters/lkc-vo9pz/topics/testTopic1/configs:alter' -d '{"data": [{"name": "retention.ms", "value": "172800000"}, {"name": "segment.bytes", "value": "123456789"}]}'
     ```
-</Step>
-<Step>
-View the updated values for topic configuration.
-	You can view the updates as shown in the previous step, substituting `retention.ms` and then `segment.bytes` for `<property-name>` in this API call:
-	
+  </Step>
+  <Step>
+    View the updated values for topic configuration. You can view the updates as shown in the previous step, substituting `retention.ms` and then `segment.bytes` for `<property-name>` in this API call:
+
     ```bash
     curl -H "Authorization: Basic <BASE64-encoded-key-and-secret>" --request GET --url 'https://<REST-endpoint>/kafka/v3/clusters/<cluster-id>/topics/<topic-name>/configs/<property-name>’
     ```
-	
-	Alternatively, sign in to the [Confluent Cloud Console](https://confluent.cloud/login?session_ref=direct&url_ref=https%3A%2F%2Fdocs.confluent.io%2Fcloud%2Fcurrent%2Fkafka-rest%2Fkrest-qs.html), navigate to `testTopic1` on your cluster, click the **Configuration** tab, and then click **Show full config**.
-	
+
+    Alternatively, sign in to the [Confluent Cloud Console](https://confluent.cloud/login?session_ref=direct&url_ref=https%3A%2F%2Fdocs.confluent.io%2Fcloud%2Fcurrent%2Fkafka-rest%2Fkrest-qs.html), navigate to `testTopic1` on your cluster, click the **Configuration** tab, and then click **Show full config**.
+
     <Frame>
-    [![../_images/rest-api-qs-topic-configs-ui.png](https://docs.confluent.io/cloud/current/_images/rest-api-qs-topic-configs-ui.png)](https://docs.confluent.io/cloud/current/_images/rest-api-qs-topic-configs-ui.png)
+      
     </Frame>
-</Step>
+  </Step>
 </Steps>
 
 ## Step 6: Create a topic and configure properties simultaneously
@@ -430,7 +415,7 @@ This creates the topic `testTopic2`, specifies `replication_factor` and `partiti
 
 ## Step 7: Produce data to the topic
 
-To produce to a topic, provide JSON data and a base64-encoded API key and secret to the REST Produce endpoint ([/kafka/v3/clusters/&lt;cluster-id&gt;/topics/&lt;topic-name&gt;/records](https://docs.confluent.io/cloud/current/api.html#tag/Records-\(v3\))) as shown in the examples below.
+To produce to a topic, provide JSON data and a base64-encoded API key and secret to the REST Produce endpoint ([/kafka/v3/clusters/\<cluster-id\>/topics/\<topic-name\>/records](https://docs.confluent.io/cloud/current/api.html#tag/Records-\(v3\))) as shown in the examples below.
 
 As you work through the examples, have the Confluent Cloud Console opened to the cluster and topic **Messages** tab where you are sending data. This way, you can watch the messages show up when you send the data. You will miss the messages if you do not have the Confluent Cloud Console open as you make the `records` request.
 
@@ -439,9 +424,9 @@ This example sends messages to `testTopic1` in `MY-FIRST-CLUSTER`.
 ### Streaming mode (recommended for sending a batch of records)
 
 <Info>
-**Note**
+  **Note**
 
-For additional examples, see the public GitHub site [kafka-rest/examples/produce\_v3](https://github.com/confluentinc/kafka-rest/tree/master/examples/produce_v3?session_ref=direct&url_ref=https%3A%2F%2Fdocs.confluent.io%2Fcloud%2Fcurrent%2Fkafka-rest%2Fkrest-qs.html).
+  For additional examples, see the public GitHub site [kafka-rest/examples/produce_v3](https://github.com/confluentinc/kafka-rest/tree/master/examples/produce_v3?session_ref=direct&url_ref=https%3A%2F%2Fdocs.confluent.io%2Fcloud%2Fcurrent%2Fkafka-rest%2Fkrest-qs.html).
 </Info>
 
 Streaming mode is the more efficient way to send multiple records. In streaming mode, you can open an interactive terminal connection as part of the API call, and send multiple records over a single stream. To use this mode, set an additional header `"Transfer-Encoding: chunked”` on the initial request:
@@ -451,7 +436,6 @@ curl -X POST -H "Transfer-Encoding: chunked" -H "Content-Type: application/json"
 -H "Authorization: Basic <BASE64-encoded-key-and-secret>" \\
  <REST-endpoint>/kafka/v3/clusters/<cluster-id>/topics/<topic-name>/records -T-
 ```
-
 
 For example:
 
@@ -468,20 +452,19 @@ https://pkc-abcde.us-west4.gcp.confluent.cloud:443/kafka/v3/clusters/lkc-vo9pz/t
 View the **Messages** tab for testTopic1 on the Confluent Cloud Console (as you are sending the message):
 
 <Frame>
-[![../_images/rest-api-qs-produce-batch-records-streaming.png](https://docs.confluent.io/cloud/current/_images/rest-api-qs-produce-batch-records-streaming.png)](https://docs.confluent.io/cloud/current/_images/rest-api-qs-produce-batch-records-streaming.png)
+  
 </Frame>
 
 ### Non-streaming mode (not recommended)
 
 The syntax to produce a single record to a topic is as follows:
 
-```bash 
+```bash
  curl -X POST -H "Content-Type: application/json" \
  -H "Authorization: Basic <BASE64-encoded-key-and-secret>" \
  '<REST-endpoint>/kafka/v3/clusters/<cluster-id>/topics/<topic-name>/records' -d \
 '{"value": {"type": "<type>", "data": "<data>"}}'
 ```
-
 
 For `type`, current options are `BINARY`, `JSON` or `STRING`.
 
@@ -496,15 +479,14 @@ curl -X POST -H "Content-Type: application/json" \
 
 View the **Messages** tab for testTopic1 on the Confluent Cloud UI:
 
-<Frame> 
-[![../_images/rest-api-qs-produce-single-record.png](https://docs.confluent.io/cloud/current/_images/rest-api-qs-produce-single-record.png)](https://docs.confluent.io/cloud/current/_images/rest-api-qs-produce-single-record.png)
+<Frame>
+  
 </Frame>
 
-
 <Tip>
-**Tip**
+  **Tip**
 
-The Confluent Cloud Console must be open as you send the messages, otherwise you will miss them.
+  The Confluent Cloud Console must be open as you send the messages, otherwise you will miss them.
 </Tip>
 
 You can use non-streaming mode to send multiple records in a single request by appending records together and in the data payload of a single, non-streamed request as shown in the following example:
@@ -525,61 +507,72 @@ That said, streaming mode is more efficient for sending multiple records, as sho
 When you are ready to quit the Quick Start demo or when the topic is no longer needed, you can delete the sample topics.
 
 <Steps>
-<Step>
-To delete a topic, use this API call:
-
-```bash
-	curl -H "Authorization: Basic <BASE64-encoded-key-and-secret>" -H 'Content-Type: application/json' --request DELETE  --url 'https://<REST-endpoint>/kafka/v3/clusters/<cluster-id>/topics/<topic-name>'
-```
-
-	For example:
+  <Step>
+    To delete a topic, use this API call:
 
     ```bash
-	curl -H "Authorization: Basic ABC123ABC" -H 'Content-Type: application/json' --request DELETE  --url 'https://pkc-abcde.us-west4.gcp.confluent.cloud:443/kafka/v3/clusters/lkc-vo9pz/topics/testTopic1'
+    	curl -H "Authorization: Basic <BASE64-encoded-key-and-secret>" -H 'Content-Type: application/json' --request DELETE  --url 'https://<REST-endpoint>/kafka/v3/clusters/<cluster-id>/topics/<topic-name>'
     ```
-	
+
+    For example:
+
     ```bash
-	curl -H "Authorization: Basic ABC123ABC" -H 'Content-Type: application/json' --request DELETE  --url 'https://pkc-abcde.us-west4.gcp.confluent.cloud:443/kafka/v3/clusters/lkc-vo9pz/topics/testTopic2'
+    curl -H "Authorization: Basic ABC123ABC" -H 'Content-Type: application/json' --request DELETE  --url 'https://pkc-abcde.us-west4.gcp.confluent.cloud:443/kafka/v3/clusters/lkc-vo9pz/topics/testTopic1'
     ```
-	
-	This call has no response payload.
-</Step>
-<Step>
-Confirm that topic was deleted by listing the topics in the cluster:
-	
+
     ```bash
-	curl -H "Authorization: Basic <BASE64-encoded-key-and-secret>" --request GET --url 'https://<REST-endpoint>/kafka/v3/clusters/<cluster-id>/topics'
+    curl -H "Authorization: Basic ABC123ABC" -H 'Content-Type: application/json' --request DELETE  --url 'https://pkc-abcde.us-west4.gcp.confluent.cloud:443/kafka/v3/clusters/lkc-vo9pz/topics/testTopic2'
     ```
-	
-	For example:
-	
+
+    This call has no response payload.
+  </Step>
+  <Step>
+    Confirm that topic was deleted by listing the topics in the cluster:
+
     ```bash
-	curl -H "Authorization: Basic ABC123ABC" --request GET --url 'https://pkc-abcde.us-west4.gcp.confluent.cloud:443/kafka/v3/clusters/lkc-vo9pz/topics'
+    curl -H "Authorization: Basic <BASE64-encoded-key-and-secret>" --request GET --url 'https://<REST-endpoint>/kafka/v3/clusters/<cluster-id>/topics'
     ```
-	
-	The response shows that there are no topics in the cluster:
+
+    For example:
+
+    ```bash
+    curl -H "Authorization: Basic ABC123ABC" --request GET --url 'https://pkc-abcde.us-west4.gcp.confluent.cloud:443/kafka/v3/clusters/lkc-vo9pz/topics'
+    ```
+
+    The response shows that there are no topics in the cluster:
 
     ```json
-	{
-	  "kind": "KafkaTopicList",
-	  "metadata": {
-	    "self": "https://pkc-abcde.us-west4.gcp.confluent.cloud:443/kafka/v3/clusters/lkc-vo9pz/topics",
-	    "next": null
-	  },
-	  "data": [\]
-	}
+    {
+      "kind": "KafkaTopicList",
+      "metadata": {
+        "self": "https://pkc-abcde.us-west4.gcp.confluent.cloud:443/kafka/v3/clusters/lkc-vo9pz/topics",
+        "next": null
+      },
+      "data": [\]
+    }
     ```
-</Step>
+  </Step>
 </Steps>
 
 ## Suggested Resources
 
 <Columns cols={2}>
-<Card icon="arrow-right" horizontal title="Confluent Cloud REST APIs" href="https://docs.confluent.io/cloud/current/api.html#tag/Cluster-\(v3\)" />
-<Card icon="arrow-right" horizontal title="Confluent Cloud APIs overview" href="https://docs.confluent.io/cloud/current/api.html#section/Introduction" />
-<Card icon="arrow-right" horizontal title="Confluent CLI Install" href="https://docs.confluent.io/confluent-cli/current/install.html" />
-<Card icon="arrow-right" horizontal title="Confluent CLI Command Reference" href="https://docs.confluent.io/confluent-cli/current/command-reference/confluent_completion.html" />
-<Card icon="arrow-right" horizontal title="Use API Keys to Authenticate to Confluent Cloud" href="https://docs.confluent.io/cloud/current/security/authenticate/workload-identities/service-accounts/api-keys/overview.html#cloud-api-keys" />
-<Card icon="arrow-right" horizontal title="Quick Start for Confluent Cloud" href="https://docs.confluent.io/cloud/current/get-started/index.html#cloud-quickstart" />
+  <Card title="Confluent Cloud REST APIs" icon="arrow-right" horizontal href="https://docs.confluent.io/cloud/current/api.html#tag/Cluster-\(v3\)">
+    
+  </Card>
+  <Card title="Confluent Cloud APIs overview" icon="arrow-right" horizontal href="https://docs.confluent.io/cloud/current/api.html#section/Introduction">
+    
+  </Card>
+  <Card title="Confluent CLI Install" icon="arrow-right" horizontal href="https://docs.confluent.io/confluent-cli/current/install.html">
+    
+  </Card>
+  <Card title="Confluent CLI Command Reference" icon="arrow-right" horizontal href="https://docs.confluent.io/confluent-cli/current/command-reference/confluent_completion.html">
+    
+  </Card>
+  <Card title="Use API Keys to Authenticate to Confluent Cloud" icon="arrow-right" horizontal href="https://docs.confluent.io/cloud/current/security/authenticate/workload-identities/service-accounts/api-keys/overview.html#cloud-api-keys">
+    
+  </Card>
+  <Card title="Quick Start for Confluent Cloud" icon="arrow-right" horizontal href="https://docs.confluent.io/cloud/current/get-started/index.html#cloud-quickstart">
+    
+  </Card>
 </Columns>
-
